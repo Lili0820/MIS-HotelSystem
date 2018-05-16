@@ -22,7 +22,7 @@ public interface BookService {
 
     Map<String, Object> cancelBook(String bookid);
 
-    Map<String,Object> remarkBook(int remark);
+    Map<String,Object> remarkBook(String bookId, int remark);
 
     List<Book> getBooksByPlanid(String planid);
 

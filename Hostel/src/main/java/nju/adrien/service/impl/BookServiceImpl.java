@@ -217,9 +217,25 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Map<String, Object> remarkBook(int remark) {
-        // TODO: 18/5/16
-        return null;
+    public Map<String, Object> remarkBook(String bookId, int remark) {
+        Map<String, Object> map = new HashMap<>();
+        Book book = bookRepository.findOne(bookId);
+        if(book==null){
+            map.put("error","No such booking");
+            return map;
+        }
+        HotelPlan hotelPlan=hotelPlanRepository.findOne(book.getPlanid());
+        if(hotelPlan==null){
+            map.put("error","No such plan");
+            return map;
+        }
+        HotelInfo hotel=hotelInfoRepository.findOne(hotelPlan.getHid());
+        hotel.setPoint((remark+hotel.getPoint())/2.0);
+        book.setPoint(remark);
+        book.setState("已评价");
+        bookRepository.saveAndFlush(book);
+        map.put("success",true);
+        return map;
     }
 
     @Override

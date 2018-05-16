@@ -45,6 +45,7 @@ public class HallServiceImpl implements HallService {
         //入住状态
         Book book = bookRepository.findOne(bookid);
         book.setCheckin(1);
+        book.setState("已入住");
         book.setPay(-1 * book.getPay());
         bookRepository.saveAndFlush(book);
 
