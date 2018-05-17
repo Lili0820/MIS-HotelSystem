@@ -21,6 +21,7 @@ public class Book {
     private String state;
     private int point;
     private Date booktime;
+    private Date updatetime;
 
     @Id
     @Column(name = "bookid")
@@ -102,6 +103,14 @@ public class Book {
         this.booktime = booktime;
     }
 
+    @Column(name="updatetime")
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
 
     @Override
     public String toString() {
@@ -115,6 +124,7 @@ public class Book {
                 ", state='" + state + '\'' +
                 ", point=" + point +
                 ", booktime=" + booktime +
+                ", updatetime=" + updatetime +
                 '}';
     }
 }

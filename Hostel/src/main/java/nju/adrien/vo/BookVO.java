@@ -17,7 +17,8 @@ public class BookVO {
     private double price;
     private int checkin;
     private String state;
-    private Date booktime;//最后操作时间
+    private Date booktime;//下单时间
+    private Date updatetime;//最后操作时间
     private int point;
 
     public String getBookid() {
@@ -124,6 +125,14 @@ public class BookVO {
         this.point = point;
     }
 
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
     /**
      * 没有设置bookid
      *
@@ -154,6 +163,7 @@ public class BookVO {
                 ", checkin=" + checkin +
                 ", state='" + state + '\'' +
                 ", booktime=" + booktime +
+                ", updatetime=" + updatetime +
                 ", point=" + point +
                 '}';
     }

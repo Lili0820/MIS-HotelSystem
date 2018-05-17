@@ -48,6 +48,7 @@ public class BookServiceImpl implements BookService {
             bookVO.setPrice(book.getPay());
             bookVO.setCheckin(book.getCheckin());
             bookVO.setBooktime(book.getBooktime());
+            bookVO.setUpdatetime(book.getUpdatetime());
             bookVO.setState(book.getState());
             bookVO.setPoint(book.getPoint());
 
@@ -82,6 +83,7 @@ public class BookServiceImpl implements BookService {
             bookVO.setBooktime(book.getBooktime());
             bookVO.setState(book.getState());
             bookVO.setPoint(book.getPoint());
+            bookVO.setUpdatetime(book.getUpdatetime());
 
             vos.add(bookVO);
         }
@@ -130,6 +132,7 @@ public class BookServiceImpl implements BookService {
                 bookVO.setBooktime(book.getBooktime());
                 bookVO.setState(book.getState());
                 bookVO.setPoint(book.getPoint());
+                bookVO.setUpdatetime(book.getUpdatetime());
 
                 vos.add(bookVO);
             }
@@ -138,6 +141,11 @@ public class BookServiceImpl implements BookService {
         return vos;
     }
 
+    /**
+     * 预定时直接支付
+     * @param book
+     * @return
+     */
     @Override
     public synchronized Map<String, Object> payBook(BookVO book) {
         Map<String, Object> map = new HashMap<>();
@@ -166,11 +174,17 @@ public class BookServiceImpl implements BookService {
             Book model = book.toBook();
             model.setBookid(NumberFormater.formatLongId(NumberFormater.string2Integer(bookRepository.getMaxBookid()) + 1));
             model.setState("已支付");
+            model.setUpdatetime(new Date(System.currentTimeMillis()));
             bookRepository.saveAndFlush(model);
         }
         return map;
     }
 
+    /**
+     * 入住时现金支付
+     * @param book
+     * @return
+     */
     @Override
     public Map<String, Object> bookCash(BookVO book) {
         Map<String, Object> map = new HashMap<>();
@@ -183,8 +197,11 @@ public class BookServiceImpl implements BookService {
             map.put("success", true);
             //新的订单
             Book model = book.toBook();
+            model.setState("未支付");
             model.setPay(-1 * model.getPay());
             model.setBookid(NumberFormater.formatLongId(NumberFormater.string2Integer(bookRepository.getMaxBookid()) + 1));
+            model.setUpdatetime(new Date(System.currentTimeMillis()));
+            model.setBooktime(new Date(System.currentTimeMillis()));
             bookRepository.saveAndFlush(model);
         }
         return map;
@@ -209,7 +226,7 @@ public class BookServiceImpl implements BookService {
         }
 
         book.setState("已取消");
-        book.setBooktime(new Date(System.currentTimeMillis()));
+        book.setUpdatetime(new Date(System.currentTimeMillis()));
         bookRepository.saveAndFlush(book);
 
         map.put("success", true);
@@ -233,6 +250,7 @@ public class BookServiceImpl implements BookService {
         hotel.setPoint((remark+hotel.getPoint())/2.0);
         book.setPoint(remark);
         book.setState("已评价");
+        book.setUpdatetime(new Date(System.currentTimeMillis()));
         bookRepository.saveAndFlush(book);
         map.put("success",true);
         return map;

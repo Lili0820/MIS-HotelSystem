@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public interface HotelAnalyseService {
     /**
-     * 近一周每天的预订量
+     * 近一月每天的预订量(热度图 http://echarts.baidu.com/examples/editor.html?c=calendar-charts)
      * @return
      */
     public List<Integer> getWeekDayBookNum();

@@ -12,6 +12,7 @@ import nju.adrien.util.NumberFormater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public class HallServiceImpl implements HallService {
         Book book = bookRepository.findOne(bookid);
         book.setCheckin(1);
         book.setState("已入住");
+        book.setUpdatetime(new Date(System.currentTimeMillis()));
         bookRepository.saveAndFlush(book);
         map.put("success", true);
         return map;
@@ -46,6 +48,7 @@ public class HallServiceImpl implements HallService {
         Book book = bookRepository.findOne(bookid);
         book.setCheckin(1);
         book.setState("已入住");
+        book.setUpdatetime(new Date(System.currentTimeMillis()));
         book.setPay(-1 * book.getPay());
         bookRepository.saveAndFlush(book);
 
