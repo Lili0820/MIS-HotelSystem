@@ -27,11 +27,29 @@
     <div class="content">
         <%@include file="../../common/admin_statistic_dashboard_left.jsp" %>
         <div class="right-content">
-            <div>
-                <h3 class="title">当月预订量</h3>
-                <div id="order_num_chart" style="margin-left:16%;width:500px;height:310px"></div>
+            <div style="display: flex;width: 500px;height:30px;margin-left: 10%">
+                <div class="normal-div" style="flex: 2">查询范围
+                    <select id="range" class="select">
+                        <option value="month">当月</option>
+                        <option value="week">当周</option>
+                        <option value="day">当天</option>
+                    </select>
+                </div>
+                <div class="normal-div" style="margin-right: 1%">选择日期</div>
+                <div class="normal-div" style="flex: 2">
+                    <div class="input-append date" id="date" data-date="2018-6-24" data-date-format="yyyy-mm-dd">
+                        <input size="16" type="text" value="2018-6-24" readonly>
+                    </div>
+                </div>
+                <div style="flex:1;margin-top: 2%">
+                    <button type="button" class="button btn-register right-floated" onclick="confirm()">确定</button>
+                </div>
+            </div>
+            <div style="margin-top: 5%">
+                <h3 class="title">预订总量   134</h3>
+                <div id="order_num_chart_month" style="margin-left:16%;width:500px;height:310px"></div>
                 <script type="text/javascript">
-                    var myChart = echarts.init(document.getElementById('order_num_chart'));
+                    var myChart = echarts.init(document.getElementById('order_num_chart_month'));
                     function getVirtulData(year) {
                         year = year || '2018';
                         var date = +echarts.number.parseDate(year + '-01-01');
@@ -106,6 +124,89 @@
                     };
                     myChart.setOption(option);
                 </script>
+                <div id="order_num_chart_week" style="display:none;margin-left:16%;width:500px;height:300px"></div>
+                <script type="text/javascript">
+                    var myChart=echarts.init(document.getElementById("order_num_chart_week"));
+                    option = {
+                        tooltip : {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['大床房','标准间','套房']
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : ['周一','周二','周三','周四','周五','周六','周日']
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'大床房',
+                                type:'bar',
+                                data:[10, 22, 11, 14, 20, 23, 19]
+                            },
+                            {
+                                name:'标准间',
+                                type:'bar',
+                                data:[22, 23, 20, 23, 29, 13, 11]
+                            },
+                            {
+                                name:'套房',
+                                type:'bar',
+                                data:[2, 1, 3, 4, 2, 3, 3]
+                            },
+                            {
+                                name:'大床房',
+                                type:'bar',
+                                stack: '总计',
+                                data:[10, 22, 11, 14, 20, 23, 19]
+                            },
+                            {
+                                name:'标准间',
+                                type:'bar',
+                                stack: '总计',
+                                data:[22, 23, 20, 23, 29, 13, 11]
+                            },
+                            {
+                                name:'套房',
+                                type:'bar',
+                                stack: '总计',
+                                data:[2, 1, 3, 4, 2, 3, 3]
+                            }
+                        ]
+                    };
+                    myChart.setOption(option);
+                </script>
+                <div class="table-container" id="order_num_chart_day" style="display:none;width:600px">
+                    <table id="js-table" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th width="20%">订单编号</th>
+                            <th width="25%">入住日期</th>
+                            <th width="15%">房型</th>
+                            <th width="15%">总额</th>
+                            <th width="20%">订单状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${planItems}" var="item">
+                            <tr>
+                                <td hidden>${item.planid}</td>
+                                <td>${item.date}</td>
+                                <td>${item.type}</td>
+                                <td>￥ ${item.price}</td>
+                                <td>${item.available}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div style="margin-top: 2%;margin-bottom:2%;border:solid 0.5px #d6d6d6"></div>
             <div>
@@ -210,22 +311,109 @@
                     };
                     myChart.setOption(option);
                 </script>
-                <div style="display: flex;width: 500px;height:30px;margin-left: 5%">
-                    <div class="normal-div" style="flex: 1">查询范围
-                        <select id="range" class="select">
-                            <option value="month">当月</option>
-                            <option value="week">当周</option>
-                            <option value="day">当天</option>
-                        </select>
-                    </div>
-                    <div class="normal-div" style="margin-right: 1%">选择日期</div>
-                    <div class="normal-div" style="flex: 1">
-                        <div class="input-append date" id="date" data-date="2018-6-24" data-date-format="yyyy-mm-dd">
-                            <input size="16" type="text" value="2018-6-24" readonly>
-                        </div>
-                    </div>
-                </div>
+                <div id="success_rate_chart_week" style="display:none;margin-left:15%;width:500px;height:350px"></div>
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById("success_rate_chart_week"));
+                    option = {
+                        title: {
+                            text: '交易成功率',
+                            x: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            formatter: '{b}<br/>{a0}: {c0}%<br />{a1}: {c1}%<br />{a2}: {c2}%<br/>{a3}: {c3}%'
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataZoom: {},
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {}
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            name: '日',
+                            data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: '交易成功率',
+                            axisLabel: {
+                                formatter: '{value} %'
+                            }
+                        },
+                        series: [
 
+                            {
+                                name: '大床房',
+                                type: 'line',
+                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                markPoint: {
+                                    label: {
+                                        show: true,
+                                        formatter: '{c}%'
+                                    }
+                                }
+                            },
+                            {
+                                name: '标准间',
+                                type: 'line',
+                                lineStyle: {
+                                    type: 'dashed'
+                                },
+                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                markPoint: {
+                                    label: {
+                                        formatter: '{c}%'
+                                    },
+                                    data: [
+                                        {type: 'max', name: '最大值'},
+                                        {type: 'min', name: '最小值'}
+                                    ]
+                                }
+                            },
+
+                            {
+                                name: '套房',
+                                lineStyle: {
+                                    type: 'dotted'
+                                },
+                                type: 'line',
+                                markPoint: {
+                                    label: {
+                                        formatter: '{c}%'
+                                    },
+                                    data: [
+                                        {type: 'max', name: '最大值'},
+                                        {type: 'min', name: '最小值'}
+                                    ]
+                                },
+                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0]
+                            },
+                            {
+                                name: '总体',
+                                type: 'line',
+                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                markPoint: {
+                                    label: {
+                                        show: true,
+                                        formatter: '{c}%'
+                                    },
+                                    data: [
+                                        {type: 'max', name: '最大值'},
+                                        {type: 'min', name: '最小值'}
+                                    ]
+                                }
+                            }
+                        ]
+                    };
+                    myChart.setOption(option);
+                </script>
+                <div id="success_rate_chart_day" style="display:none;margin-left:5%;">
+                   <h5>交易成功率————暂无数据</h5>
+                </div>
                 <div  style="width:650px;height:320px;display: flex;margin-top: 5%">
                     <div id="cancel_chart_1" style="width:300px;height:200px"></div>
                     <script type="text/javascript">
@@ -325,5 +513,33 @@
         startView: 2,
         minView: 2
     });
+
+    function confirm() {
+        var type=$("#range").val();
+        if(type=='month'){
+            document.getElementById('success_rate_chart').style.display='block';
+            document.getElementById('success_rate_chart_week').style.display='none';
+            document.getElementById('success_rate_chart_day').style.display='none';
+            document.getElementById('order_num_chart_month').style.display='block';
+            document.getElementById('order_num_chart_week').style.display='none';
+            document.getElementById("order_num_chart_day").style.display='none';
+        }
+        else if(type=='week'){
+            document.getElementById("success_rate_chart").style.display='none';
+            document.getElementById("success_rate_chart_week").style.display='block';
+            document.getElementById("success_rate_chart_day").style.display='none';
+            document.getElementById("order_num_chart_month").style.display='none';
+            document.getElementById("order_num_chart_week").style.display='block';
+            document.getElementById("order_num_chart_day").style.display='none';
+        }
+        else{
+            document.getElementById("success_rate_chart").style.display='none';
+            document.getElementById("success_rate_chart_week").style.display='none';
+            document.getElementById("success_rate_chart_day").style.display='block';
+            document.getElementById("order_num_chart_month").style.display='none';
+            document.getElementById("order_num_chart_week").style.display='none';
+            document.getElementById("order_num_chart_day").style.display='block';
+        }
+    }
 </script>
 </html>

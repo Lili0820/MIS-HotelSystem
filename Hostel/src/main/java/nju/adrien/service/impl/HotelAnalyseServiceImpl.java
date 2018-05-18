@@ -1,7 +1,9 @@
 package nju.adrien.service.impl;
 
 import nju.adrien.service.HotelAnalyseService;
+import nju.adrien.vo.BookStatisticInfo;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,18 +12,19 @@ import java.util.Map;
  */
 public class HotelAnalyseServiceImpl implements HotelAnalyseService {
 
+
     @Override
-    public List<Integer> getWeekDayBookNum() {
+    public BookStatisticInfo getWeekBookInfo(Date date) {
         return null;
     }
 
     @Override
-    public Double getSuccessBookRates() {
+    public BookStatisticInfo getMonthBookInfo(Date date) {
         return null;
     }
 
     @Override
-    public List<Integer> getSeasonBookNum() {
+    public BookStatisticInfo getDayBookInfo(Date date) {
         return null;
     }
 
