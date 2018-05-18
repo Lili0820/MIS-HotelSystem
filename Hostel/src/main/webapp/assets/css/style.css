@@ -19,6 +19,7 @@ a {
 }
 
 .wrapper {
+    background-color: #f5f5f5;
     margin-top: 20px;
 }
 
@@ -294,22 +295,23 @@ a {
 }
 
 .dashboard-left {
-    float: left;
+    position:fixed;
+    float:left;
     width: 150px;
-    padding: 10px;
-    background-color: #fff;
+    padding: 5px;
+    background-color: #ffffff;
 }
 
 .dashboard-left > #nav > li {
     text-decoration: none;
     list-style: none;
     cursor: pointer;
-    padding: 10px 0px;
+    padding: 5px 0px;
     letter-spacing: 5px;
 }
 
 .dashboard-left > #nav > li > a:hover {
-    text-decoration: none;
+    /*text-decoration: none;*/
     color: #5e5e5e;
 }
 
@@ -658,7 +660,7 @@ a {
 */
 
 .admin-body {
-    background-color: #e3e3e3;
+    background-color:#f5f5f5;
 }
 
 .admin-navbar {

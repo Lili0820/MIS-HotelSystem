@@ -70,7 +70,7 @@ public class HotelController {
     }
 
     // 店面入住情况统计界面
-    @RequestMapping(value = "/admin/statistics", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/statistics/room", method = RequestMethod.GET)
     public ModelAndView statisticsPage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("admin/statistic/statistic");
 
@@ -82,14 +82,37 @@ public class HotelController {
         return modelAndView;
     }
 
-    // 财务信息界面
-    @RequestMapping(value = "/admin/fiance", method = RequestMethod.GET)
+    // 收益统计界面
+    @RequestMapping(value = "/admin/statistics/finance", method = RequestMethod.GET)
     public ModelAndView financePage(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("admin/finance/finance");
         String hid = (String) session.getAttribute("hid");
         Date date = new Date(System.currentTimeMillis());
         modelAndView.addObject("vo", hotelService.makeFinanceAnalyse(hid, date.getYear() + 1900, date.getMonth() + 1));
         modelAndView.addObject("list", hotelService.makeFinanceList(hid, date.getYear() + 1900, date.getMonth() + 1));
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/admin/statistics/income",method = RequestMethod.GET)
+    public ModelAndView incomePage(HttpSession session){
+        ModelAndView modelAndView=new ModelAndView("admin/hotelstatistic/income_statistic");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/admin/statistics/market",method = RequestMethod.GET)
+    public ModelAndView marketPage(HttpSession session){
+        return null;
+    }
+
+    @RequestMapping(value = "/admin/statistics/customer",method = RequestMethod.GET)
+    public ModelAndView customerPage(HttpSession session){
+        return null;
+    }
+
+    @RequestMapping(value = "/admin/statistics/order",method = RequestMethod.GET)
+    public ModelAndView orderPage(HttpSession session){
+        ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/order_statistic");
+
         return modelAndView;
     }
 
