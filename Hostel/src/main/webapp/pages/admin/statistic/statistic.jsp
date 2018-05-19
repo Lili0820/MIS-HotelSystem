@@ -48,7 +48,6 @@
                                         <td>${item.bookTotal}</td>
                                         <td>${item.bookCheckin}</td>
                                         <td>${item.nonBookCheckin}</td>
-                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

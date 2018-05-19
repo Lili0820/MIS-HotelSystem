@@ -17,7 +17,9 @@
     <script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/plugins/datatables/datatables.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/echarts.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/echarts.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/plugins/datetimepicker/css/jquery.datetimepicker.css"/>
+    <script src="${pageContext.request.contextPath}/assets/plugins/datetimepicker/js/jquery.datetimepicker.js"></script>
 </head>
 <body class="admin-body">
 <%@include file="../../common/admin_navbar.jsp" %>
@@ -28,8 +30,8 @@
             <div style="display: flex;width: 500px;height:30px;margin-left: 10%">
                 <div class="normal-div" style="flex: 2">查询范围
                     <select id="range" class="select">
-                        <option value="month">当周</option>
-                        <option value="week">当月</option>
+                        <option value="week">当周</option>
+                        <option value="month">当月</option>
                         <option value="day">当天</option>
                     </select>
                 </div>
@@ -304,6 +306,10 @@
 </body>
 
 <script type="text/javascript">
+    $('#date').datetimepicker({
+        startView: 2,
+        minView: 2
+    });
     function confirm() {
         var type=$("#range").val();
         if(type=='month'){

@@ -3,6 +3,7 @@ package nju.adrien.controller;
 import nju.adrien.service.HotelService;
 import nju.adrien.service.ProductService;
 import nju.adrien.vo.IndexProduct;
+import nju.adrien.vo.StatisticVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -121,7 +123,10 @@ public class HotelController {
     @RequestMapping(value = "/admin/statistics/room",method = RequestMethod.GET)
     public ModelAndView roomPage(HttpSession session){
         ModelAndView modelAndView=new ModelAndView("admin/hotelstatistic/room_statistic");
+        String hid = (String) session.getAttribute("hid");
 
+        List<StatisticVO> list = hotelService.getRoomStatistic(hid, new Date(System.currentTimeMillis()));
+        modelAndView.addObject("list", list);
         return modelAndView;
     }
 
