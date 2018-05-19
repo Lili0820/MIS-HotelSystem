@@ -18,7 +18,8 @@
     <script src="${pageContext.request.contextPath}/assets/plugins/datatables/datatables.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/echarts.js"></script>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/plugins/datetimepicker/css/jquery.datetimepicker.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/assets/plugins/datetimepicker/css/jquery.datetimepicker.css"/>
     <script src="${pageContext.request.contextPath}/assets/plugins/datetimepicker/js/jquery.datetimepicker.js"></script>
 </head>
 <body class="admin-body">
@@ -37,8 +38,11 @@
                 </div>
                 <div class="normal-div" style="margin-right: 1%">选择日期</div>
                 <div class="normal-div" style="flex: 2">
-                    <div class="input-append date" id="date" data-date="2018-6-24" data-date-format="yyyy-mm-dd">
-                        <input size="16" type="text" value="2018-6-24" readonly>
+                    <div class="input-append date" id="datepicker">
+                        <input id="date" size="16" type="text" data-date-format="yyyy-mm-dd" value=${nowDate}>
+                        <span
+                                class="add-on calendarIcon"><i
+                                class="icon-calendar glyphicon glyphicon-th"></i></span>
                     </div>
                 </div>
                 <div style="flex:1;margin-top: 2%">
@@ -46,188 +50,196 @@
                 </div>
             </div>
             <div style="margin-top: 5%">
-                <h3 class="title">本期收益总额 ￥13425</h3>
+                <h3 class="title">本期收益总额 ￥${incomeTotal}</h3>
                 <div class="normal-div"></div>
                 <div style="margin-bottom: 20px; margin-top: 20px;">
-                    <div id="week_income_chart" style="width: 600px;height:400px;"></div>
-                    <script type="text/javascript">
-                        var myChart = echarts.init(document.getElementById('week_income_chart'));
-                        option = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            legend: {
-                                data: ['大床房', '标准间', '套房']
-                            },
-                            grid: {
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: {
-                                type: 'value'
-                            },
-                            yAxis: {
-                                type: 'category',
-                                data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
-                            },
-                            series: [
-                                {
-                                    name: '大床房',
-                                    type: 'bar',
-                                    stack: '总量',
-                                    label: {
-                                        normal: {
-                                            show: true,
-                                            position: 'insideRight'
+                    <c:choose>
+                        <c:when test="${type.equals('week')}">
+                            <div id="week_income_chart" style="width: 600px;height:400px;"></div>
+                            <script type="text/javascript">
+                                var myChart = echarts.init(document.getElementById('week_income_chart'));
+                                option = {
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                                         }
                                     },
-                                    data: [800, 1002, 1301, 1334, 1690, 2330, 1320]
-                                },
-                                {
-                                    name: '标准间',
-                                    type: 'bar',
-                                    stack: '总量',
-                                    label: {
-                                        normal: {
-                                            show: true,
-                                            position: 'insideRight'
+                                    legend: {
+                                        data: ['大床房', '标准间', '套房']
+                                    },
+                                    grid: {
+                                        left: '3%',
+                                        right: '4%',
+                                        bottom: '3%',
+                                        containLabel: true
+                                    },
+                                    xAxis: {
+                                        type: 'value'
+                                    },
+                                    yAxis: {
+                                        type: 'category',
+                                        data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
+                                    },
+                                    series: [
+                                        {
+                                            name: '大床房',
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: true,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            data: ${incomeWeekLarge}
+                                        },
+                                        {
+                                            name: '标准间',
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: true,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            data: ${incomeWeekDouble}
+                                        },
+                                        {
+                                            name: '套房',
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: true,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            data: ${incomeWeekSuite}
+                                        }
+                                    ]
+                                };
+                                myChart.setOption(option);
+                            </script>
+                        </c:when>
+                        <c:when test="${type.equals('month')}">
+                            <div id="month_income_chart" style="display:none;width: 600px;height:400px;"></div>
+                            <script type="text/javascript">
+                                var myChart = echarts.init(document.getElementById('month_income_chart'));
+                                option = {
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                                         }
                                     },
-                                    data: [1520, 1432, 1401, 1434, 990, 1230, 1210]
-                                },
-                                {
-                                    name: '套房',
-                                    type: 'bar',
-                                    stack: '总量',
-                                    label: {
-                                        normal: {
-                                            show: true,
-                                            position: 'insideRight'
-                                        }
+                                    legend: {
+                                        data: ['大床房', '标准间', '套房']
                                     },
-                                    data: [2220, 1182, 1191, 2134, 1290, 1330, 1310]
-                                }
-                            ]
-                        };
-                        myChart.setOption(option);
-                    </script>
-                    <div id="month_income_chart" style="display:none;width: 600px;height:400px;"></div>
-                    <script type="text/javascript">
-                        var myChart = echarts.init(document.getElementById('week_income_chart'));
-                        option = {
-                            tooltip: {
-                                trigger: 'axis',
-                                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                                }
-                            },
-                            legend: {
-                                data: ['大床房', '标准间', '套房']
-                            },
-                            grid: {
-                                left: '3%',
-                                right: '4%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            xAxis: {
-                                type: 'value'
-                            },
-                            yAxis: {
-                                type: 'category',
-                                data: ['5-13', '5-20', '5-27', '6-3', '6-10', '6-17', '6-24']
-                            },
-                            series: [
-                                {
-                                    name: '大床房',
-                                    type: 'bar',
-                                    stack: '总量',
-                                    label: {
-                                        normal: {
-                                            show: true,
-                                            position: 'insideRight'
-                                        }
+                                    grid: {
+                                        left: '3%',
+                                        right: '4%',
+                                        bottom: '3%',
+                                        containLabel: true
                                     },
-                                    data: [6980, 7020, 7010, 9340, 8900, 8300, 9200]
-                                },
-                                {
-                                    name: '标准间',
-                                    type: 'bar',
-                                    stack: '总量',
-                                    label: {
-                                        normal: {
-                                            show: true,
-                                            position: 'insideRight'
-                                        }
+                                    xAxis: {
+                                        type: 'value'
                                     },
-                                    data: [5520, 4432, 5401, 6434, 3090, 7230, 6210]
-                                },
-                                {
-                                    name: '套房',
-                                    type: 'bar',
-                                    stack: '总量',
-                                    label: {
-                                        normal: {
-                                            show: true,
-                                            position: 'insideRight'
-                                        }
+                                    yAxis: {
+                                        type: 'category',
+                                        data: ['5-13', '5-20', '5-27', '6-3', '6-10', '6-17', '6-24']
                                     },
-                                    data: [8220, 7182, 6191, 7134, 6290, 7330, 8310]
-                                }
-                            ]
-                        };
-                        myChart.setOption(option);
-                    </script>
-                    <div class="table-container" id="day_income_chart" style="display:none;width:600px">
-                        <table id="js-table" class="table table-striped table-bordered">
-                            <thead>
-                            <tr>
-                                <th width="35%">时间</th>
-                                <th width="20%">相关订单号</th>
-                                <th width="15%">金额</th>
-                                <th width="30%">来源</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${planItems}" var="item">
-                                <tr>
-                                    <td>${item.date}</td>
-                                    <td>${item.type}</td>
-                                    <td>￥ ${item.price}</td>
-                                    <td>${item.available}</td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
+                                    series: [
+                                        {
+                                            name: '大床房',
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: true,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            data: ${incomeMonthLarge}
+                                        },
+                                        {
+                                            name: '标准间',
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: true,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            data: ${incomeMonthDouble}
+                                        },
+                                        {
+                                            name: '套房',
+                                            type: 'bar',
+                                            stack: '总量',
+                                            label: {
+                                                normal: {
+                                                    show: true,
+                                                    position: 'insideRight'
+                                                }
+                                            },
+                                            data: ${incomeMonthSuite}
+                                        }
+                                    ]
+                                };
+                                myChart.setOption(option);
+                            </script>
+                        </c:when>
+                        <c:when test="${type.equals('day')}">
+                            <div class="table-container" id="day_income_chart" style="width:600px">
+                                <table id="js-table" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th width="35%">时间</th>
+                                        <th width="20%">相关订单号</th>
+                                        <th width="15%">金额</th>
+                                        <th width="30%">来源</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${orders}" var="item">
+                                        <tr>
+                                            <td>${item.booktime}</td>
+                                            <td>${item.bookid}</td>
+                                            <td>￥ ${item.price}</td>
+                                            <td>${item.available}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:when>
+                    </c:choose>
                 </div>
             </div>
             <div style="margin-top: 2%;margin-bottom:2%;border:solid 0.5px #d6d6d6"></div>
             <div style="margin-top: 5%">
                 <h3 class="title">本期营业收入达成率</h3>
-                <div class="table-container" id="goal_reach_reate" style="width:600px">
+                <div class="table-container" id="goal_reach_rate" style="width:600px">
                     <table id="goal-table" class="table table-striped table-bordered">
                         <thead>
                         <%--最后一行数据是合计--%>
                         <tr>
                             <th width="30%">日期</th>
                             <th width="20%">预期收入</th>
-                            <th width="20%">目标收入</th>
+                            <th width="20%">实际收入</th>
                             <th width="30%">达成率</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${planItems}" var="item">
+                        <c:forEach items="${goals}" var="item">
                             <tr>
-                                <td hidden>${item.planid}</td>
-                                <td>￥ ${item.date}</td>
-                                <td>￥ ${item.type}</td>
-                                <td>${item.price} %</td>
+                                <td>${item.date}</td>
+                                <td>￥ ${item.goalIncome}</td>
+                                <td>￥ ${item.actualIncome}</td>
+                                <td>${item.rate} %</td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -253,8 +265,8 @@
                                     radius: '60%',
                                     center: ['30%', '40%'],
                                     data: [
-                                        {value: 9400, name: '线上'},
-                                        {value: 4025, name: '线下'}
+                                        {value: ${incomeSource.get(0)}, name: '线上'},
+                                        {value: ${incomeSource.get(1)}, name: '线下'}
                                     ],
                                     itemStyle: {
                                         emphasis: {
@@ -283,8 +295,8 @@
                                     radius: '60%',
                                     center: ['40%', '40%'],
                                     data: [
-                                        {value: 13425-925, name: '正常订单'},
-                                        {value: 925, name: '退订手续费'}
+                                        {value: ${incomeSource.get(2)}, name: '正常订单'},
+                                        {value: ${incomeSource.get(3)}, name: '手续费'}
                                     ],
                                     itemStyle: {
                                         emphasis: {
@@ -306,29 +318,17 @@
 </body>
 
 <script type="text/javascript">
+    $("#range").val("${type}");
     $('#date').datetimepicker({
         startView: 2,
         minView: 2
     });
     function confirm() {
-        var type=$("#range").val();
-        if(type=='month'){
-            document.getElementById('per_room_chart').style.display='block';
-            //document.getElementById('per_room_chart_day').style.display='none';
-            document.getElementById('month_income_chart').style.display='block';
-            document.getElementById('week_income_chart').style.display='none';
-            document.getElementById("day_income_chart").style.display='none';
-        }
-        else if(type=='week'){
-            document.getElementById("month_income_chart").style.display='none';
-            document.getElementById("week_income_chart").style.display='block';
-            document.getElementById("day_income_chart").style.display='none';
-        }
-        else{
-            document.getElementById("month_income_chart").style.display='none';
-            document.getElementById("week_income_chart").style.display='none';
-            document.getElementById("day_income_chart").style.display='block';
-        }
+        var type = $("#range").val();
+        var date=$("#date").val();
+        setTimeout(function () {
+            window.location.href = "/admin/statistics/income/find?type="+type+"&date="+date;
+        }, 1000);
     }
 </script>
 

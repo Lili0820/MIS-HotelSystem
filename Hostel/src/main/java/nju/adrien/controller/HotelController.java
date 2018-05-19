@@ -3,7 +3,6 @@ package nju.adrien.controller;
 import nju.adrien.service.HotelService;
 import nju.adrien.service.ProductService;
 import nju.adrien.vo.IndexProduct;
-import nju.adrien.vo.StatisticVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -69,19 +67,6 @@ public class HotelController {
         return hotelService.password(hid, old, password, passwordAgain);
     }
 
-    // 店面入住情况统计界面
-//    @RequestMapping(value = "/admin/statistics/room", method = RequestMethod.GET)
-//    public ModelAndView statisticsPage(HttpSession session) {
-//        ModelAndView modelAndView = new ModelAndView("admin/statistic/statistic");
-//
-//        String hid = (String) session.getAttribute("hid");
-//
-//        List<StatisticVO> list = hotelService.getRoomStatistic(hid, new Date(System.currentTimeMillis()));
-//        modelAndView.addObject("list", list);
-//
-//        return modelAndView;
-//    }
-
     // 收益统计界面
     @RequestMapping(value = "/admin/statistics/finance", method = RequestMethod.GET)
     public ModelAndView financePage(HttpSession session) {
@@ -90,43 +75,6 @@ public class HotelController {
         Date date = new Date(System.currentTimeMillis());
         modelAndView.addObject("vo", hotelService.makeFinanceAnalyse(hid, date.getYear() + 1900, date.getMonth() + 1));
         modelAndView.addObject("list", hotelService.makeFinanceList(hid, date.getYear() + 1900, date.getMonth() + 1));
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/admin/statistics/income",method = RequestMethod.GET)
-    public ModelAndView incomePage(HttpSession session){
-        ModelAndView modelAndView=new ModelAndView("admin/hotelstatistic/income_statistic");
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/admin/statistics/market",method = RequestMethod.GET)
-    public ModelAndView marketPage(HttpSession session){
-        ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/market_statistic");
-
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/admin/statistics/customer",method = RequestMethod.GET)
-    public ModelAndView customerPage(HttpSession session){
-        ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/customer_statistic");
-
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/admin/statistics/order",method = RequestMethod.GET)
-    public ModelAndView orderPage(HttpSession session){
-        ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/order_statistic");
-
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/admin/statistics/room",method = RequestMethod.GET)
-    public ModelAndView roomPage(HttpSession session){
-        ModelAndView modelAndView=new ModelAndView("admin/hotelstatistic/room_statistic");
-        String hid = (String) session.getAttribute("hid");
-
-        List<StatisticVO> list = hotelService.getRoomStatistic(hid, new Date(System.currentTimeMillis()));
-        modelAndView.addObject("list", list);
         return modelAndView;
     }
 

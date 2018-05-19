@@ -27,6 +27,27 @@
         <%@include file="../../common/admin_statistic_dashboard_left.jsp" %>
         <div class="right-content">
             <div>
+                <div style="display: flex;width: 500px;height:30px;margin-left: 10%;margin-bottom: 5%">
+                    <div class="normal-div" style="flex: 2">查询范围
+                        <select id="range" class="select">
+                            <option value="month">当月</option>
+                            <option value="week">当周</option>
+                            <option value="day">当天</option>
+                        </select>
+                    </div>
+                    <div class="normal-div" style="margin-right: 1%">选择日期</div>
+                    <div class="normal-div" style="flex: 2">
+                        <div class="input-append date" id="datepicker">
+                            <input id="date" size="16" type="text"  data-date-format="yyyy-mm-dd" value=${nowDate}>
+                            <span
+                                    class="add-on calendarIcon"><i
+                                    class="icon-calendar glyphicon glyphicon-th"></i></span>
+                        </div>
+                    </div>
+                    <div style="flex:1;margin-top: 2%">
+                        <button type="button" class="button btn-register right-floated" onclick="confirm()">确定</button>
+                    </div>
+                </div>
                 <h3 class="title">顾客数量统计</h3>
                 <div class="table-container" id="day_income_chart" style="width:600px">
                     <table id="js-table" class="table table-striped table-bordered">
@@ -40,10 +61,10 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>42</td>
-                            <td>12</td>
-                            <td>18</td>
-                            <td>48.6%</td>
+                            <td>${total}</td>
+                            <td>${add}</td>
+                            <td>${repeat}</td>
+                            <td>${rate}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -79,7 +100,7 @@
                             min:0
                         },
                         series: [{
-                            data: [4.4, 4.3, 4.4, 4.5, 4.5, 4.4, 4.5],
+                            data: ${remarks},
                             type: 'line'
                         }]
                     };
@@ -91,5 +112,24 @@
     <%@include file="/pages/common/toaster.jsp" %>
 </body>
 
-</body>
+<script type="text/javascript">
+    $("#range").val("${type}");
+    $('#datepicker').datetimepicker({
+        minView: "month", //选择日期后，不会再跳转去选择时分秒
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        todayBtn: 1,
+        autoclose: 1,
+        timepicker: false,
+        inputMask: true
+    });
+
+    function confirm() {
+        var type = $("#range").val();
+        var date=$("#date").val();
+        setTimeout(function () {
+            window.location.href = "/admin/statistics/customer/find?type="+type+"&date="+date;
+        }, 1000);
+    }
+</script>
 </html>

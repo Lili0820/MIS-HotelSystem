@@ -32,16 +32,18 @@
             <div style="display: flex;width: 500px;height:30px;margin-left: 10%;margin-bottom: 5%">
                 <div class="normal-div" style="flex: 2">查询范围
                     <select id="range" class="select">
-                        <option value="day">当天</option>
-                        <option value="week">当周</option>
                         <option value="month">当月</option>
-
+                        <option value="week">当周</option>
+                        <option value="day">当天</option>
                     </select>
                 </div>
                 <div class="normal-div" style="margin-right: 1%">选择日期</div>
                 <div class="normal-div" style="flex: 2">
-                    <div class="input-append date" id="date" data-date="2018-6-24" data-date-format="yyyy-mm-dd">
-                        <input size="16" type="text" value="2018-6-24" readonly>
+                    <div class="input-append date" id="datepicker">
+                        <input id="date" size="16" type="text" data-date-format="yyyy-mm-dd" value=${nowDate}>
+                        <span
+                                class="add-on calendarIcon"><i
+                                class="icon-calendar glyphicon glyphicon-th"></i></span>
                     </div>
                 </div>
                 <div style="flex:1;margin-top: 2%">
@@ -49,229 +51,237 @@
                 </div>
             </div>
             <div>
-                <h3 class="title">市场占有率 23.1%</h3>
-                <div id="market_rate_chart_month" style="display:none;margin-left:15%;width:500px;height:350px"></div>
-                <script type="text/javascript">
-                    var myChart = echarts.init(document.getElementById("market_rate_chart_month"));
-                    option = {
-                        title: {
-                            text: '市场占有率',
-                            x: 'center'
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            formatter: '{b}<br/>{a0}: {c0}%<br />{a1}: {c1}%<br />{a2}: {c2}%<br/>{a3}: {c3}%'
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                dataZoom: {},
-                                dataView: {readOnly: false},
-                                magicType: {type: ['line', 'bar']},
-                                restore: {}
-                            }
-                        },
-                        xAxis: {
-                            type: 'category',
-                            name: '周',
-                            data: ['5-13', '5-20', '5-27', '6-3', '6-10', '6-17', '6-24']
-                        },
-                        yAxis: {
-                            type: 'value',
-                            name: '市场占有率',
-                            axisLabel: {
-                                formatter: '{value} %'
-                            }
-                        },
-                        series: [
+                <h3 class="title">市场占有率 ${averageRate}%</h3>
+                <c:choose>
+                    <c:when test="${type.equals('month')}">
+                        <div id="market_rate_chart_month" style="margin-left:15%;width:500px;height:350px"></div>
+                    <script type="text/javascript">
+                        var myChart = echarts.init(document.getElementById("market_rate_chart_month"));
+                        option = {
+                            title: {
+                                text: '市场占有率',
+                                x: 'center'
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                formatter: '{b}<br/>{a0}: {c0}%<br />{a1}: {c1}%<br />{a2}: {c2}%<br/>{a3}: {c3}%'
+                            },
+                            toolbox: {
+                                show: true,
+                                feature: {
+                                    dataZoom: {},
+                                    dataView: {readOnly: false},
+                                    magicType: {type: ['line', 'bar']},
+                                    restore: {}
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                name: '周',
+                                data: ['5-13', '5-20', '5-27', '6-3', '6-10', '6-17', '6-24']
+                            },
+                            yAxis: {
+                                type: 'value',
+                                name: '市场占有率',
+                                axisLabel: {
+                                    formatter: '{value} %'
+                                }
+                            },
+                            series: [
 
-                            {
-                                name: '大床房',
-                                type: 'line',
-                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                markPoint: {
-                                    label: {
-                                        show: true,
-                                        formatter: '{c}%'
+                                {
+                                    name: '大床房',
+                                    type: 'line',
+                                    data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                    markPoint: {
+                                        label: {
+                                            show: true,
+                                            formatter: '{c}%'
+                                        }
+                                    }
+                                },
+                                {
+                                    name: '标准间',
+                                    type: 'line',
+                                    lineStyle: {
+                                        type: 'dashed'
+                                    },
+                                    data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                    markPoint: {
+                                        label: {
+                                            formatter: '{c}%'
+                                        },
+                                        data: [
+                                            {type: 'max', name: '最大值'},
+                                            {type: 'min', name: '最小值'}
+                                        ]
+                                    }
+                                },
+
+                                {
+                                    name: '套房',
+                                    lineStyle: {
+                                        type: 'dotted'
+                                    },
+                                    type: 'line',
+                                    markPoint: {
+                                        label: {
+                                            formatter: '{c}%'
+                                        },
+                                        data: [
+                                            {type: 'max', name: '最大值'},
+                                            {type: 'min', name: '最小值'}
+                                        ]
+                                    },
+                                    data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0]
+                                },
+                                {
+                                    name: '总体',
+                                    type: 'line',
+                                    data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                    markPoint: {
+                                        label: {
+                                            show: true,
+                                            formatter: '{c}%'
+                                        },
+                                        data: [
+                                            {type: 'max', name: '最大值'},
+                                            {type: 'min', name: '最小值'}
+                                        ]
                                     }
                                 }
-                            },
-                            {
-                                name: '标准间',
-                                type: 'line',
-                                lineStyle: {
-                                    type: 'dashed'
+                            ]
+                        };
+                        myChart.setOption(option);
+                    </script>
+                    </c:when>
+                    <c:when test="${type.equals('week')}">
+                        <div id="market_rate_chart_week" style="margin-left:15%;width:500px;height:350px"></div>
+                        <script type="text/javascript">
+                            var myChart = echarts.init(document.getElementById("market_rate_chart_week"));
+                            option = {
+                                title: {
+                                    text: '市场占有率',
+                                    x: 'center'
                                 },
-                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                markPoint: {
-                                    label: {
-                                        formatter: '{c}%'
-                                    },
-                                    data: [
-                                        {type: 'max', name: '最大值'},
-                                        {type: 'min', name: '最小值'}
-                                    ]
-                                }
-                            },
-
-                            {
-                                name: '套房',
-                                lineStyle: {
-                                    type: 'dotted'
+                                tooltip: {
+                                    trigger: 'axis',
+                                    formatter: '{b}<br/>{a0}: {c0}%<br />{a1}: {c1}%<br />{a2}: {c2}%<br/>{a3}: {c3}%'
                                 },
-                                type: 'line',
-                                markPoint: {
-                                    label: {
-                                        formatter: '{c}%'
-                                    },
-                                    data: [
-                                        {type: 'max', name: '最大值'},
-                                        {type: 'min', name: '最小值'}
-                                    ]
-                                },
-                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0]
-                            },
-                            {
-                                name: '总体',
-                                type: 'line',
-                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                markPoint: {
-                                    label: {
-                                        show: true,
-                                        formatter: '{c}%'
-                                    },
-                                    data: [
-                                        {type: 'max', name: '最大值'},
-                                        {type: 'min', name: '最小值'}
-                                    ]
-                                }
-                            }
-                        ]
-                    };
-                    myChart.setOption(option);
-                </script>
-                <div id="market_rate_chart_week" style="display:none;margin-left:15%;width:500px;height:350px"></div>
-                <script type="text/javascript">
-                    var myChart = echarts.init(document.getElementById("market_rate_chart_week"));
-                    option = {
-                        title: {
-                            text: '市场占有率',
-                            x: 'center'
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            formatter: '{b}<br/>{a0}: {c0}%<br />{a1}: {c1}%<br />{a2}: {c2}%<br/>{a3}: {c3}%'
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                dataZoom: {},
-                                dataView: {readOnly: false},
-                                magicType: {type: ['line', 'bar']},
-                                restore: {}
-                            }
-                        },
-                        xAxis: {
-                            type: 'category',
-                            name: '日',
-                            data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
-                        },
-                        yAxis: {
-                            type: 'value',
-                            name: '市场占有率',
-                            axisLabel: {
-                                formatter: '{value} %'
-                            }
-                        },
-                        series: [
-
-                            {
-                                name: '大床房',
-                                type: 'line',
-                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                markPoint: {
-                                    label: {
-                                        show: true,
-                                        formatter: '{c}%'
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        dataZoom: {},
+                                        dataView: {readOnly: false},
+                                        magicType: {type: ['line', 'bar']},
+                                        restore: {}
                                     }
-                                }
-                            },
-                            {
-                                name: '标准间',
-                                type: 'line',
-                                lineStyle: {
-                                    type: 'dashed'
                                 },
-                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                markPoint: {
-                                    label: {
-                                        formatter: '{c}%'
-                                    },
-                                    data: [
-                                        {type: 'max', name: '最大值'},
-                                        {type: 'min', name: '最小值'}
-                                    ]
-                                }
-                            },
+                                xAxis: {
+                                    type: 'category',
+                                    name: '日',
+                                    data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
+                                },
+                                yAxis: {
+                                    type: 'value',
+                                    name: '市场占有率',
+                                    axisLabel: {
+                                        formatter: '{value} %'
+                                    }
+                                },
+                                series: [
 
-                            {
-                                name: '套房',
-                                lineStyle: {
-                                    type: 'dotted'
-                                },
-                                type: 'line',
-                                markPoint: {
-                                    label: {
-                                        formatter: '{c}%'
+                                    {
+                                        name: '大床房',
+                                        type: 'line',
+                                        data: [Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0],
+                                        markPoint: {
+                                            label: {
+                                                show: true,
+                                                formatter: '{c}%'
+                                            }
+                                        }
                                     },
-                                    data: [
-                                        {type: 'max', name: '最大值'},
-                                        {type: 'min', name: '最小值'}
-                                    ]
-                                },
-                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0]
-                            },
-                            {
-                                name: '总体',
-                                type: 'line',
-                                data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                markPoint: {
-                                    label: {
-                                        show: true,
-                                        formatter: '{c}%'
+                                    {
+                                        name: '标准间',
+                                        type: 'line',
+                                        lineStyle: {
+                                            type: 'dashed'
+                                        },
+                                        data: [Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0],
+                                        markPoint: {
+                                            label: {
+                                                formatter: '{c}%'
+                                            },
+                                            data: [
+                                                {type: 'max', name: '最大值'},
+                                                {type: 'min', name: '最小值'}
+                                            ]
+                                        }
                                     },
-                                    data: [
-                                        {type: 'max', name: '最大值'},
-                                        {type: 'min', name: '最小值'}
-                                    ]
-                                }
-                            }
-                        ]
-                    };
-                    myChart.setOption(option);
-                </script>
-                <div id="market_rate_chart_day" style="width: 400px">
-                    <div class="table-container">
-                        <table id="js-table" class="table table-striped table-bordered">
-                            <thead>
-                            <tr>
-                                <th width="30%">大床房</th>
-                                <th width="30%">标准间</th>
-                                <th width="20%">套房</th>
-                                <th width="20%">总体</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>30.2%</td>
-                                <td>20.5%</td>
-                                <td>15.6%</td>
-                                <td>23.1%</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
+                                    {
+                                        name: '套房',
+                                        lineStyle: {
+                                            type: 'dotted'
+                                        },
+                                        type: 'line',
+                                        markPoint: {
+                                            label: {
+                                                formatter: '{c}%'
+                                            },
+                                            data: [
+                                                {type: 'max', name: '最大值'},
+                                                {type: 'min', name: '最小值'}
+                                            ]
+                                        },
+                                        data: [Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0]
+                                    },
+                                    {
+                                        name: '总体',
+                                        type: 'line',
+                                        data: [Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0, Math.floor(Math.random() * 5000) / 100.0],
+                                        markPoint: {
+                                            label: {
+                                                show: true,
+                                                formatter: '{c}%'
+                                            },
+                                            data: [
+                                                {type: 'max', name: '最大值'},
+                                                {type: 'min', name: '最小值'}
+                                            ]
+                                        }
+                                    }
+                                ]
+                            };
+                            myChart.setOption(option);
+                        </script>
+                    </c:when>
+                    <c:when test="${type.equals('day')}">
+                        <div id="market_rate_chart_day" style="width: 400px">
+                            <div class="table-container">
+                                <table id="js-table" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th width="30%">大床房</th>
+                                        <th width="30%">标准间</th>
+                                        <th width="20%">套房</th>
+                                        <th width="20%">总体</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>${rates.get(0)}%</td>
+                                        <td>${rates.get(1)}%</td>
+                                        <td>${rates.get(2)}%</td>
+                                        <td>${rates.get(3)}%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </c:when>
+                </c:choose>
                 <div style="margin-top: 2%;margin-bottom:2%;border:solid 0.5px #d6d6d6"></div>
                 <div>
                     <h3 class="title">同地区酒店价格分布</h3>
@@ -282,34 +292,34 @@
                             var dates = ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28'];
                             var data = [];
                             for (var i = 0; i < 10; i++) {
-                                    data.push([
-                                        '6-22',
-                                        Math.floor(Math.random() * 50000) / 100.0
-                                    ]);
-                                    data.push([
-                                        '6-23',
-                                        Math.floor(Math.random() * 50000) / 100.0
-                                    ]);
-                                    data.push([
-                                        '6-24',
-                                        Math.floor(Math.random() * 50000) / 100.0
-                                    ]);
-                                    data.push([
-                                        '6-25',
-                                        Math.floor(Math.random() * 50000) / 100.0
-                                    ]);
-                                    data.push([
-                                        '6-26',
-                                        Math.floor(Math.random() * 50000) / 100.0
-                                    ]);
-                                    data.push([
-                                        '6-27',
-                                        Math.floor(Math.random() * 50000) / 100.0
-                                    ]);
-                                    data.push([
-                                        '6-28',
-                                        Math.floor(Math.random() * 50000) / 100.0
-                                    ]);
+                                data.push([
+                                    '6-22',
+                                    Math.floor(Math.random() * 50000) / 100.0
+                                ]);
+                                data.push([
+                                    '6-23',
+                                    Math.floor(Math.random() * 50000) / 100.0
+                                ]);
+                                data.push([
+                                    '6-24',
+                                    Math.floor(Math.random() * 50000) / 100.0
+                                ]);
+                                data.push([
+                                    '6-25',
+                                    Math.floor(Math.random() * 50000) / 100.0
+                                ]);
+                                data.push([
+                                    '6-26',
+                                    Math.floor(Math.random() * 50000) / 100.0
+                                ]);
+                                data.push([
+                                    '6-27',
+                                    Math.floor(Math.random() * 50000) / 100.0
+                                ]);
+                                data.push([
+                                    '6-28',
+                                    Math.floor(Math.random() * 50000) / 100.0
+                                ]);
                             }
                             return data;
                         }
@@ -514,27 +524,23 @@
 <%@include file="/pages/common/toaster.jsp" %>
 </body>
 <script type="text/javascript">
-    $('#date').datetimepicker({
-        startView: 2,
-        minView: 2
+    $("#range").val("${type}");
+    $('#datepicker').datetimepicker({
+        minView: "month", //选择日期后，不会再跳转去选择时分秒
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        todayBtn: 1,
+        autoclose: 1,
+        timepicker: false,
+        inputMask: true
     });
+
     function confirm() {
-        var type=$("#range").val();
-        if(type=='month'){
-            document.getElementById('market_rate_chart_month').style.display='block';
-            document.getElementById('market_rate_chart_week').style.display='none';
-            document.getElementById('market_rate_chart_day').style.display='none';
-        }
-        else if(type=='week'){
-            document.getElementById("market_rate_chart_month").style.display='none';
-            document.getElementById("market_rate_chart_week").style.display='block';
-            document.getElementById("market_rate_chart_day").style.display='none';
-        }
-        else{
-            document.getElementById("market_rate_chart_month").style.display='none';
-            document.getElementById("market_rate_chart_week").style.display='block';
-            document.getElementById("market_rate_chart_day").style.display='block';
-        }
+        var type = $("#range").val();
+        var date = $("#date").val();
+        setTimeout(function () {
+            window.location.href = "/admin/statistics/market/find?type=" + type + "&date=" + date;
+        }, 1000);
     }
 </script>
 </html>
