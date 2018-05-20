@@ -531,6 +531,7 @@
 <%@include file="/pages/common/toaster.jsp" %>
 <script type="text/javascript">
     $("#range").val("${type}");
+    alert(${dates});
     $('#datepicker').datetimepicker({
         minView: "month", //选择日期后，不会再跳转去选择时分秒
         language: 'zh-CN',

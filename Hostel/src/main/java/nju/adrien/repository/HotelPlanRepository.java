@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.sql.Date;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public interface HotelPlanRepository extends JpaRepository<HotelPlan, String> {
     @Query("select a from HotelPlan a where a.hid = ?1 order by a.date")
     List<HotelPlan> findByHid(String hid);
@@ -22,4 +23,5 @@ public interface HotelPlanRepository extends JpaRepository<HotelPlan, String> {
 
     @Query("select a.planid from HotelPlan a where a.hid = ?1 and Year(a.date) =  ?2 and Month(a.date) =  ?3")
     List<String> getIdsByMonth(String hid, int year, int month);
+
 }

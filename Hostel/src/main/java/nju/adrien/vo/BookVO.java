@@ -77,14 +77,6 @@ public class BookVO {
         this.date = date;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -133,6 +125,14 @@ public class BookVO {
         this.updatetime = updatetime;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     /**
      * 没有设置bookid
      *
@@ -145,6 +145,7 @@ public class BookVO {
         book.setCheckin(0);
         book.setPay(price);
         book.setNames(names);
+        book.setHid(hid);
         return book;
     }
 
@@ -157,8 +158,8 @@ public class BookVO {
                 ", hid='" + hid + '\'' +
                 ", hname='" + hname + '\'' +
                 ", names='" + names + '\'' +
-                ", date=" + date +
                 ", type='" + type + '\'' +
+                ", date=" + date +
                 ", price=" + price +
                 ", checkin=" + checkin +
                 ", state='" + state + '\'' +

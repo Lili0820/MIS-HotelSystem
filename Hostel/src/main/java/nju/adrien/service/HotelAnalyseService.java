@@ -1,5 +1,6 @@
 package nju.adrien.service;
 
+import nju.adrien.vo.add.IncomeStatisticInfo;
 import nju.adrien.vo.add.OrderStatisticInfo;
 
 import java.sql.Date;
@@ -11,28 +12,17 @@ import java.util.Map;
  */
 public interface HotelAnalyseService {
     /**
-     * 获得近一周订单的统计信息(热度图 http://echarts.baidu.com/examples/editor.html?c=calendar-charts)
+     * 获得订单的统计信息
      * @return
      */
-    public OrderStatisticInfo getWeekBookInfo(Date date);
+    public OrderStatisticInfo getBookStatisticInfo(String hId,String type, Date date);
+
 
     /**
-     * 获得近一月订单的统计信息(热度图 http://echarts.baidu.com/examples/editor.html?c=calendar-charts)
+     * 获得收益统计信息
      * @return
      */
-    public OrderStatisticInfo getMonthBookInfo(Date date);
-
-    /**
-     * 获得当日订单的统计信息(热度图 http://echarts.baidu.com/examples/editor.html?c=calendar-charts)
-     * @return
-     */
-    public OrderStatisticInfo getDayBookInfo(Date date);
-
-    /**
-     * 获得近一周收益统计信息
-     * @return
-     */
-
+    public IncomeStatisticInfo getIncomeStatisticInfo(String type,Date date);
 
     /**
      * 获得近一周不同类型客房的净收入（表格）

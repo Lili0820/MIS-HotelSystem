@@ -175,6 +175,9 @@ public class BookServiceImpl implements BookService {
             model.setBookid(NumberFormater.formatLongId(NumberFormater.string2Integer(bookRepository.getMaxBookid()) + 1));
             model.setState("已支付");
             model.setUpdatetime(new Date(System.currentTimeMillis()));
+            model.setBooktime(new Date(System.currentTimeMillis()));
+            HotelPlan plan = hotelPlanRepository.findOne(book.getPlanid());
+            model.setRoomtype(plan.getType());
             bookRepository.saveAndFlush(model);
         }
         return map;
@@ -202,6 +205,8 @@ public class BookServiceImpl implements BookService {
             model.setBookid(NumberFormater.formatLongId(NumberFormater.string2Integer(bookRepository.getMaxBookid()) + 1));
             model.setUpdatetime(new Date(System.currentTimeMillis()));
             model.setBooktime(new Date(System.currentTimeMillis()));
+            HotelPlan plan = hotelPlanRepository.findOne(book.getPlanid());
+            model.setRoomtype(plan.getType());
             bookRepository.saveAndFlush(model);
         }
         return map;

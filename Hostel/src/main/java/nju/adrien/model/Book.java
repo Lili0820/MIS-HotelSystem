@@ -22,6 +22,8 @@ public class Book {
     private int point;
     private Date booktime;
     private Date updatetime;
+    private String roomtype;
+    private String hid;
 
     @Id
     @Column(name = "bookid")
@@ -112,6 +114,23 @@ public class Book {
         this.updatetime = updatetime;
     }
 
+    @Column(name="roomtype")
+    public String getRoomtype() {
+        return roomtype;
+    }
+
+    public void setRoomtype(String roomtype) {
+        this.roomtype = roomtype;
+    }
+    @Column(name = "hid")
+    public String getHid() {
+        return hid;
+    }
+
+    public void setHid(String hid) {
+        this.hid = hid;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -125,6 +144,8 @@ public class Book {
                 ", point=" + point +
                 ", booktime=" + booktime +
                 ", updatetime=" + updatetime +
+                ", roomtype='" + roomtype + '\'' +
+                ", hid='" + hid + '\'' +
                 '}';
     }
 }

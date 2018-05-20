@@ -1,6 +1,6 @@
 package nju.adrien.vo.add;
 
-import nju.adrien.vo.BookVO;
+import nju.adrien.model.Book;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class OrderStatisticInfo {
     private List<Double> roomSuccessRates3;//套房
     private List<Integer> cancelTime;//一日、三日、七日
     private List<Integer> cancelRoom;//大床房 标准间 套房
-    private List<BookVO> bookVOs;
+    private List<Book> books;
 
     public Integer getOrderTotal() {
         return orderTotal;
@@ -58,7 +58,7 @@ public class OrderStatisticInfo {
         return cancelRoom;
     }
 
-    public List<BookVO> getBookVOs() {
-        return bookVOs;
+    public List<Book> getBooks() {
+        return books;
     }
 }
