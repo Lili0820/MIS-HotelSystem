@@ -145,7 +145,7 @@
                                 xAxis: [
                                     {
                                         type: 'category',
-                                        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                                        data: ${dates}
                                     }
                                 ],
                                 yAxis: [
@@ -352,7 +352,7 @@
                                 xAxis: {
                                     type: 'category',
                                     name: '日',
-                                    data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
+                                    data: ${dates}
                                 },
                                 yAxis: {
                                     type: 'value',
@@ -531,7 +531,6 @@
 <%@include file="/pages/common/toaster.jsp" %>
 <script type="text/javascript">
     $("#range").val("${type}");
-    alert(${dates});
     $('#datepicker').datetimepicker({
         minView: "month", //选择日期后，不会再跳转去选择时分秒
         language: 'zh-CN',

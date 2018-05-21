@@ -9,7 +9,9 @@ import nju.adrien.vo.add.OrderStatisticInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -21,41 +23,61 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
     BookRepository bookRepository;
     @Autowired
     HotelPlanRepository hotelPlanRepository;
+    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public OrderStatisticInfo getBookStatisticInfo(String hId,String type, Date date) {
         List<Book> bookList=null;
-        List<Date> dateList=new ArrayList<>();
-        switch (type){
+        List<String> dateList=new ArrayList<>();
+        List<Integer> largeBookNums=new ArrayList<>();
+        List<Integer> doubleBookNums=new ArrayList<>();
+        List<Integer> suiteBookNums=new ArrayList<>();
+        int totalNum=0;
+        switch (type) {
             case "day":
-                dateList.add(date);
-                bookList=bookRepository.findByHotelDate(hId,date,date);
+                dateList.add(simpleDateFormat.format(date));
+                bookList = bookRepository.findByHotelDate(hId, date, date);
                 break;
             case "week":
-                for(Date i=new Date(date.getTime()-6*60*60*24);!i.after(date);i=new Date(i.getTime()+60*60*24)){
-                    dateList.add(i);
+                for (Date i = new Date(date.getTime() - 6 * 60 * 60 * 24*1000); !i.after(date); i = new Date(i.getTime() + 60 * 60 * 24*1000)) {
+                    dateList.add(simpleDateFormat.format(i));
+                    totalNum=getEveryDayOrderNum(totalNum,hId,i,largeBookNums,doubleBookNums,suiteBookNums);
                 }
-                bookList=bookRepository.findByHotelDate(hId,dateList.get(0),date);
                 break;
             case "month":
-                for(Date i=new Date(date.getTime()-30*60*60*24);!i.after(date);i=new Date(i.getTime()+60*60*24)){
-                    dateList.add(i);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                calendar.add(Calendar.MONTH, -1);
+                for (Date i = new Date(calendar.getTime().getTime()); !i.after(date); i = new Date(i.getTime() + 60 * 60 * 24*1000)) {
+                    dateList.add(simpleDateFormat.format(i));
+                    totalNum=getEveryDayOrderNum(totalNum,hId,i,largeBookNums,doubleBookNums,suiteBookNums);
                 }
-                bookList=bookRepository.findByHotelDate(hId,dateList.get(0),date);
                 break;
             default:
                 return null;
         }
-        int totalNum=0;
-        int largeNum=0;
-        int doubleNum=0;
-        int suiteNum=0;
-        int largeCancel=0;
-        int doubleCancel=0;
-        int suiteCancel=0;
-        for(Book book:bookList){
+
+
+        List<List<Integer>> bookNums=new ArrayList<>();
+        bookNums.add(largeBookNums);
+        bookNums.add(doubleBookNums);
+        bookNums.add(suiteBookNums);
+        OrderStatisticInfo orderStatisticInfo=new OrderStatisticInfo(totalNum,bookNums,dateList,bookList);
+
+        return orderStatisticInfo;
+    }
+
+    private int getEveryDayOrderNum(int totalNum,String hId,Date date,List<Integer> largeBookNums,List<Integer> doubleBookNums,List<Integer> suiteBookNums){
+        List<Book> bookList = bookRepository.findByHotelDate(hId, date);
+        int largeNum = 0;
+        int doubleNum = 0;
+        int suiteNum = 0;
+        int largeCancel = 0;
+        int doubleCancel = 0;
+        int suiteCancel = 0;
+        for (Book book : bookList) {
             totalNum++;
-            switch (book.getRoomtype()){
+            switch (book.getRoomtype()) {
                 case "大床房":
                     largeNum++;
                     if (book.getState().equals("已取消")) {
@@ -76,11 +98,14 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
                     break;
             }
         }
-        return null;
+        largeBookNums.add(largeNum);
+        doubleBookNums.add(doubleNum);
+        suiteBookNums.add(suiteNum);
+        return totalNum;
     }
 
     @Override
-    public IncomeStatisticInfo getIncomeStatisticInfo(String type, Date date) {
+    public IncomeStatisticInfo getIncomeStatisticInfo(String hId,String type, Date date) {
         return null;
     }
 

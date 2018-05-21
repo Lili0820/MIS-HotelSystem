@@ -238,7 +238,7 @@
                                         xAxis: {
                                             type: 'category',
                                             name: '周',
-                                            data: ['5-13', '5-20', '5-27', '6-3', '6-10', '6-17', '6-24']
+                                            data: ${dates}
                                         },
                                         yAxis: {
                                             type: 'value',
@@ -340,7 +340,7 @@
                                         xAxis: {
                                             type: 'category',
                                             name: '日',
-                                            data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
+                                            data: ${dates}
                                         },
                                         yAxis: {
                                             type: 'value',

@@ -55,105 +55,105 @@
                 <c:choose>
                     <c:when test="${type.equals('month')}">
                         <div id="market_rate_chart_month" style="margin-left:15%;width:500px;height:350px"></div>
-                    <script type="text/javascript">
-                        var myChart = echarts.init(document.getElementById("market_rate_chart_month"));
-                        option = {
-                            title: {
-                                text: '市场占有率',
-                                x: 'center'
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                formatter: '{b}<br/>{a0}: {c0}%<br />{a1}: {c1}%<br />{a2}: {c2}%<br/>{a3}: {c3}%'
-                            },
-                            toolbox: {
-                                show: true,
-                                feature: {
-                                    dataZoom: {},
-                                    dataView: {readOnly: false},
-                                    magicType: {type: ['line', 'bar']},
-                                    restore: {}
-                                }
-                            },
-                            xAxis: {
-                                type: 'category',
-                                name: '周',
-                                data: ['5-13', '5-20', '5-27', '6-3', '6-10', '6-17', '6-24']
-                            },
-                            yAxis: {
-                                type: 'value',
-                                name: '市场占有率',
-                                axisLabel: {
-                                    formatter: '{value} %'
-                                }
-                            },
-                            series: [
+                        <script type="text/javascript">
+                            var myChart = echarts.init(document.getElementById("market_rate_chart_month"));
+                            option = {
+                                title: {
+                                    text: '市场占有率',
+                                    x: 'center'
+                                },
+                                tooltip: {
+                                    trigger: 'axis',
+                                    formatter: '{b}<br/>{a0}: {c0}%<br />{a1}: {c1}%<br />{a2}: {c2}%<br/>{a3}: {c3}%'
+                                },
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        dataZoom: {},
+                                        dataView: {readOnly: false},
+                                        magicType: {type: ['line', 'bar']},
+                                        restore: {}
+                                    }
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    name: '周',
+                                    data: ${dates}
+                                },
+                                yAxis: {
+                                    type: 'value',
+                                    name: '市场占有率',
+                                    axisLabel: {
+                                        formatter: '{value} %'
+                                    }
+                                },
+                                series: [
 
-                                {
-                                    name: '大床房',
-                                    type: 'line',
-                                    data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                    markPoint: {
-                                        label: {
-                                            show: true,
-                                            formatter: '{c}%'
+                                    {
+                                        name: '大床房',
+                                        type: 'line',
+                                        data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                        markPoint: {
+                                            label: {
+                                                show: true,
+                                                formatter: '{c}%'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name: '标准间',
+                                        type: 'line',
+                                        lineStyle: {
+                                            type: 'dashed'
+                                        },
+                                        data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                        markPoint: {
+                                            label: {
+                                                formatter: '{c}%'
+                                            },
+                                            data: [
+                                                {type: 'max', name: '最大值'},
+                                                {type: 'min', name: '最小值'}
+                                            ]
+                                        }
+                                    },
+
+                                    {
+                                        name: '套房',
+                                        lineStyle: {
+                                            type: 'dotted'
+                                        },
+                                        type: 'line',
+                                        markPoint: {
+                                            label: {
+                                                formatter: '{c}%'
+                                            },
+                                            data: [
+                                                {type: 'max', name: '最大值'},
+                                                {type: 'min', name: '最小值'}
+                                            ]
+                                        },
+                                        data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0]
+                                    },
+                                    {
+                                        name: '总体',
+                                        type: 'line',
+                                        data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
+                                        markPoint: {
+                                            label: {
+                                                show: true,
+                                                formatter: '{c}%'
+                                            },
+                                            data: [
+                                                {type: 'max', name: '最大值'},
+                                                {type: 'min', name: '最小值'}
+                                            ]
                                         }
                                     }
-                                },
-                                {
-                                    name: '标准间',
-                                    type: 'line',
-                                    lineStyle: {
-                                        type: 'dashed'
-                                    },
-                                    data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                    markPoint: {
-                                        label: {
-                                            formatter: '{c}%'
-                                        },
-                                        data: [
-                                            {type: 'max', name: '最大值'},
-                                            {type: 'min', name: '最小值'}
-                                        ]
-                                    }
-                                },
-
-                                {
-                                    name: '套房',
-                                    lineStyle: {
-                                        type: 'dotted'
-                                    },
-                                    type: 'line',
-                                    markPoint: {
-                                        label: {
-                                            formatter: '{c}%'
-                                        },
-                                        data: [
-                                            {type: 'max', name: '最大值'},
-                                            {type: 'min', name: '最小值'}
-                                        ]
-                                    },
-                                    data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0]
-                                },
-                                {
-                                    name: '总体',
-                                    type: 'line',
-                                    data: [Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0, Math.floor(Math.random() * 10000) / 100.0],
-                                    markPoint: {
-                                        label: {
-                                            show: true,
-                                            formatter: '{c}%'
-                                        },
-                                        data: [
-                                            {type: 'max', name: '最大值'},
-                                            {type: 'min', name: '最小值'}
-                                        ]
-                                    }
-                                }
-                            ]
-                        };
-                        myChart.setOption(option);
-                    </script>
+                                ]
+                            };
+                            myChart.setOption(option);
+                        </script>
                     </c:when>
                     <c:when test="${type.equals('week')}">
                         <div id="market_rate_chart_week" style="margin-left:15%;width:500px;height:350px"></div>
@@ -180,7 +180,7 @@
                                 xAxis: {
                                     type: 'category',
                                     name: '日',
-                                    data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
+                                    data: ${dates}
                                 },
                                 yAxis: {
                                     type: 'value',
@@ -285,237 +285,242 @@
                 <div style="margin-top: 2%;margin-bottom:2%;border:solid 0.5px #d6d6d6"></div>
                 <div>
                     <h3 class="title">同地区酒店价格分布</h3>
-                    <div id="price_chart" style="margin-left:15%;width:500px;height:350px"></div>
-                    <script type="text/javascript">
-                        var myChart = echarts.init(document.getElementById("price_chart"));
-                        function getVirtulData1() {
-                            var dates = ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28'];
-                            var data = [];
-                            for (var i = 0; i < 10; i++) {
-                                data.push([
-                                    '6-22',
-                                    Math.floor(Math.random() * 50000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-23',
-                                    Math.floor(Math.random() * 50000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-24',
-                                    Math.floor(Math.random() * 50000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-25',
-                                    Math.floor(Math.random() * 50000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-26',
-                                    Math.floor(Math.random() * 50000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-27',
-                                    Math.floor(Math.random() * 50000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-28',
-                                    Math.floor(Math.random() * 50000) / 100.0
-                                ]);
-                            }
-                            return data;
-                        }
-                        function getVirtulData2() {
-                            var dates = ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28'];
-                            var data = [];
-                            for (var i = 0; i < 8; i++) {
-                                data.push([
-                                    '6-22',
-                                    Math.floor(Math.random() * 80000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-23',
-                                    Math.floor(Math.random() * 80000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-25',
-                                    Math.floor(Math.random() * 80000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-27',
-                                    Math.floor(Math.random() * 80000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-28',
-                                    Math.floor(Math.random() * 80000) / 100.0
-                                ]);
-                            }
-                            return data;
-                        }
-                        function getVirtulData3() {
-                            var dates = ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28'];
-                            var data = [];
-                            for (var i = 0; i < 3; i++) {
-                                data.push([
-                                    '6-23',
-                                    Math.floor(Math.random() * 100000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-24',
-                                    Math.floor(Math.random() * 100000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-25',
-                                    Math.floor(Math.random() * 100000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-26',
-                                    Math.floor(Math.random() * 100000) / 100.0
-                                ]);
-                                data.push([
-                                    '6-27',
-                                    Math.floor(Math.random() * 100000) / 100.0
-                                ]);
-                            }
-                            return data;
-                        }
-                        option = {
-                            grid: {
-                                left: '3%',
-                                right: '7%',
-                                bottom: '3%',
-                                containLabel: true
-                            },
-                            tooltip: {
-                                // trigger: 'axis',
-                                showDelay: 0,
-                                formatter: function (params) {
-                                    if (params.value.length > 1) {
-                                        return params.seriesName + ' :<br/>'
-                                                + params.value[0] + ' '
-                                                + params.value[1] + '元 ';
+                    <c:choose>
+                        <c:when test="${type.equals('day')}">暂无数据</c:when>
+                        <c:when test="${type.equals('month')||type.equals('week')}">
+                            <div id="price_chart" style="margin-left:15%;width:500px;height:350px"></div>
+                            <script type="text/javascript">
+                                var myChart = echarts.init(document.getElementById("price_chart"));
+                                function getVirtulData1() {
+                                    var dates = ${dates};
+                                    var data = [];
+                                    for (var i = 0; i < 10; i++) {
+                                        data.push([
+                                            ${dates.get(0)},
+                                            Math.floor(Math.random() * 50000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(1)},
+                                            Math.floor(Math.random() * 50000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(2)},
+                                            Math.floor(Math.random() * 50000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(3)},
+                                            Math.floor(Math.random() * 50000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(4)},
+                                            Math.floor(Math.random() * 50000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(5)},
+                                            Math.floor(Math.random() * 50000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(6)},
+                                            Math.floor(Math.random() * 50000) / 100.0
+                                        ]);
                                     }
-                                },
-                                axisPointer: {
-                                    show: true,
-                                    type: 'cross',
-                                    lineStyle: {
-                                        type: 'dashed',
-                                        width: 1
-                                    }
+                                    return data;
                                 }
-                            },
-                            brush: {},
-                            legend: {
-                                data: ['大床房', '标准间', '套房'],
-                                left: 'center'
-                            },
-                            xAxis: [
-                                {
-                                    type: 'category',
-                                    data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28'],
-                                    scale: true,
-                                    splitLine: {
-                                        show: false
+                                function getVirtulData2() {
+                                    var dates = ${dates};
+                                    var data = [];
+                                    for (var i = 0; i < 8; i++) {
+                                        data.push([
+                                            ${dates.get(0)},
+                                            Math.floor(Math.random() * 80000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(1)},
+                                            Math.floor(Math.random() * 80000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(3)},
+                                            Math.floor(Math.random() * 80000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(5)},
+                                            Math.floor(Math.random() * 80000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(6)},
+                                            Math.floor(Math.random() * 80000) / 100.0
+                                        ]);
                                     }
+                                    return data;
                                 }
-                            ],
-                            yAxis: [
-                                {
-                                    type: 'value',
-                                    scale: true,
-                                    axisLabel: {
-                                        formatter: '{value} 元'
+                                function getVirtulData3() {
+                                    var dates = ${dates};
+                                    var data = [];
+                                    for (var i = 0; i < 3; i++) {
+                                        data.push([
+                                            ${dates.get(0)},
+                                            Math.floor(Math.random() * 100000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(2)},
+                                            Math.floor(Math.random() * 100000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(3)},
+                                            Math.floor(Math.random() * 100000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(4)},
+                                            Math.floor(Math.random() * 100000) / 100.0
+                                        ]);
+                                        data.push([
+                                            ${dates.get(6)},
+                                            Math.floor(Math.random() * 100000) / 100.0
+                                        ]);
+                                    }
+                                    return data;
+                                }
+                                option = {
+                                    grid: {
+                                        left: '3%',
+                                        right: '7%',
+                                        bottom: '3%',
+                                        containLabel: true
                                     },
-                                    splitLine: {
-                                        show: false
-                                    }
-                                }
-                            ],
-                            series: [
-                                {
-                                    name: '大床房',
-                                    type: 'scatter',
-                                    data: getVirtulData1(),
-                                    markArea: {
-                                        silent: true,
-                                        itemStyle: {
-                                            normal: {
-                                                color: 'transparent',
-                                                borderWidth: 1,
-                                                borderType: 'dashed'
+                                    tooltip: {
+                                        // trigger: 'axis',
+                                        showDelay: 0,
+                                        formatter: function (params) {
+                                            if (params.value.length > 1) {
+                                                return params.seriesName + ' :<br/>'
+                                                        + params.value[0] + ' '
+                                                        + params.value[1] + '元 ';
                                             }
                                         },
-                                        data: [[{
-                                            name: '大床房分布区间',
-                                            yAxis: 'min'
-                                        }, {
-                                            yAxis: 'max'
-                                        }]]
+                                        axisPointer: {
+                                            show: true,
+                                            type: 'cross',
+                                            lineStyle: {
+                                                type: 'dashed',
+                                                width: 1
+                                            }
+                                        }
                                     },
-                                    markPoint: {
-                                        data: [
-                                            {type: 'max', name: '最大值'},
-                                            {type: 'min', name: '最小值'}
-                                        ]
-                                    }
-                                },
-                                {
-                                    name: '标准间',
-                                    type: 'scatter',
-                                    data: getVirtulData2(),
-                                    markArea: {
-                                        silent: true,
-                                        itemStyle: {
-                                            normal: {
-                                                color: 'transparent',
-                                                borderWidth: 1,
-                                                borderType: 'dashed'
+                                    brush: {},
+                                    legend: {
+                                        data: ['大床房', '标准间', '套房'],
+                                        left: 'center'
+                                    },
+                                    xAxis: [
+                                        {
+                                            type: 'category',
+                                            data: ${dates},
+                                            scale: true,
+                                            splitLine: {
+                                                show: false
+                                            }
+                                        }
+                                    ],
+                                    yAxis: [
+                                        {
+                                            type: 'value',
+                                            scale: true,
+                                            axisLabel: {
+                                                formatter: '{value} 元'
+                                            },
+                                            splitLine: {
+                                                show: false
+                                            }
+                                        }
+                                    ],
+                                    series: [
+                                        {
+                                            name: '大床房',
+                                            type: 'scatter',
+                                            data: getVirtulData1(),
+                                            markArea: {
+                                                silent: true,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: 'transparent',
+                                                        borderWidth: 1,
+                                                        borderType: 'dashed'
+                                                    }
+                                                },
+                                                data: [[{
+                                                    name: '大床房分布区间',
+                                                    yAxis: 'min'
+                                                }, {
+                                                    yAxis: 'max'
+                                                }]]
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
                                             }
                                         },
-                                        data: [[{
-                                            name: '标准间分布区间',
-                                            yAxis: 'min'
-                                        }, {
-                                            yAxis: 'max'
-                                        }]]
-                                    },
-                                    markPoint: {
-                                        data: [
-                                            {type: 'max', name: '最大值'},
-                                            {type: 'min', name: '最小值'}
-                                        ]
-                                    }
-                                },
-                                {
-                                    name: '套房',
-                                    type: 'scatter',
-                                    data: getVirtulData3(),
-                                    markArea: {
-                                        silent: true,
-                                        itemStyle: {
-                                            normal: {
-                                                color: 'transparent',
-                                                borderWidth: 1,
-                                                borderType: 'dashed'
+                                        {
+                                            name: '标准间',
+                                            type: 'scatter',
+                                            data: getVirtulData2(),
+                                            markArea: {
+                                                silent: true,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: 'transparent',
+                                                        borderWidth: 1,
+                                                        borderType: 'dashed'
+                                                    }
+                                                },
+                                                data: [[{
+                                                    name: '标准间分布区间',
+                                                    yAxis: 'min'
+                                                }, {
+                                                    yAxis: 'max'
+                                                }]]
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
                                             }
                                         },
-                                        data: [[{
-                                            name: '套房分布区间',
-                                            yAxis: 'min'
-                                        }, {
-                                            yAxis: 'max'
-                                        }]]
-                                    },
-                                    markPoint: {
-                                        data: [
-                                            {type: 'max', name: '最大值'},
-                                            {type: 'min', name: '最小值'}
-                                        ]
-                                    }
-                                }
-                            ]
-                        };
-                        myChart.setOption(option);
-                    </script>
+                                        {
+                                            name: '套房',
+                                            type: 'scatter',
+                                            data: getVirtulData3(),
+                                            markArea: {
+                                                silent: true,
+                                                itemStyle: {
+                                                    normal: {
+                                                        color: 'transparent',
+                                                        borderWidth: 1,
+                                                        borderType: 'dashed'
+                                                    }
+                                                },
+                                                data: [[{
+                                                    name: '套房分布区间',
+                                                    yAxis: 'min'
+                                                }, {
+                                                    yAxis: 'max'
+                                                }]]
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                };
+                                myChart.setOption(option);
+                            </script>
+                        </c:when>
+                    </c:choose>
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@ public interface HotelAnalyseService {
      * 获得收益统计信息
      * @return
      */
-    public IncomeStatisticInfo getIncomeStatisticInfo(String type,Date date);
+    public IncomeStatisticInfo getIncomeStatisticInfo(String hId,String type,Date date);
 
     /**
      * 获得近一周不同类型客房的净收入（表格）

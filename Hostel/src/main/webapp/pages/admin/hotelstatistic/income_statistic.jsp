@@ -79,7 +79,7 @@
                                     },
                                     yAxis: {
                                         type: 'category',
-                                        data: ['6-22', '6-23', '6-24', '6-25', '6-26', '6-27', '6-28']
+                                        data: ${dates}
                                     },
                                     series: [
                                         {
@@ -124,7 +124,7 @@
                             </script>
                         </c:when>
                         <c:when test="${type.equals('month')}">
-                            <div id="month_income_chart" style="display:none;width: 600px;height:400px;"></div>
+                            <div id="month_income_chart" style="width: 600px;height:400px;"></div>
                             <script type="text/javascript">
                                 var myChart = echarts.init(document.getElementById('month_income_chart'));
                                 option = {
@@ -148,7 +148,7 @@
                                     },
                                     yAxis: {
                                         type: 'category',
-                                        data: ['5-13', '5-20', '5-27', '6-3', '6-10', '6-17', '6-24']
+                                        data: ${dates}
                                     },
                                     series: [
                                         {
@@ -319,9 +319,14 @@
 
 <script type="text/javascript">
     $("#range").val("${type}");
-    $('#date').datetimepicker({
-        startView: 2,
-        minView: 2
+    $('#datepicker').datetimepicker({
+        minView: "month", //选择日期后，不会再跳转去选择时分秒
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        todayBtn: 1,
+        autoclose: 1,
+        timepicker: false,
+        inputMask: true
     });
     function confirm() {
         var type = $("#range").val();

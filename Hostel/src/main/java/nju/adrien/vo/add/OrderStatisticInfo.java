@@ -22,6 +22,18 @@ public class OrderStatisticInfo {
     private List<Integer> cancelRoom;//大床房 标准间 套房
     private List<Book> books;
 
+    public OrderStatisticInfo() {
+    }
+
+
+
+    public OrderStatisticInfo(Integer orderTotal, List<List<Integer>> orderNums, List<String> dates, List<Book> books) {
+        this.orderTotal = orderTotal;
+        this.orderNums = orderNums;
+        this.dates = dates;
+        this.books = books;
+    }
+
     public Integer getOrderTotal() {
         return orderTotal;
     }

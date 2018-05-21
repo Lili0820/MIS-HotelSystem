@@ -11,8 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -23,13 +26,15 @@ public class HotelStatisticController {
     @Autowired
     private HotelService hotelService;
 
+    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+
     @RequestMapping(value = "/admin/statistics/order",method = RequestMethod.GET)
     public ModelAndView orderPage(HttpSession session){
         ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/order_statistic");
         String hid = (String) session.getAttribute("hid");
-        modelAndView.addObject("nowDate","2018-6-22");
+        modelAndView.addObject("nowDate","2018-6-28");
         int orderTotal=334;
-        String[] dateArray={"6-22","6-23","6-24","6-25","6-26","6-27","6-28"};
+        String[] dateArray={"'2018-6-22'","'2018-6-23'","'2018-6-24'","'2018-6-25'","'2018-6-26'","'2018-6-27'","'2018-6-28'"};
         List<String> dates= Arrays.asList(dateArray);
 
         modelAndView.addObject("type","month");
@@ -61,8 +66,14 @@ public class HotelStatisticController {
         modelAndView.addObject("type",type);
         modelAndView.addObject("nowDate",date);
         if(type.equals("week")){
-            String[] dateArray={"2018-6-22","6-23","6-24","6-25","6-26","6-27","6-28"};
-            List<String> dates= Arrays.asList(dateArray);
+            List<String> dates=new ArrayList<>();
+            try {
+                for(java.util.Date i=new java.util.Date(simpleDateFormat.parse(date).getTime()-6*24*60*60*1000);!i.after(simpleDateFormat.parse(date));i=new java.util.Date(i.getTime()+24*60*60*1000)){
+                    dates.add("'"+simpleDateFormat.format(i)+"'");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             modelAndView.addObject("dates",dates);
 
             int orderTotal=0;
@@ -100,9 +111,19 @@ public class HotelStatisticController {
             modelAndView.addObject("cancelRoom",cancelRoom);
         }
         else if(type.equals("month")){
-            int orderTotal=134;
-            String[] dateArray={"6-22","6-23","6-24","6-25","6-26","6-27","6-28"};
-            List<String> dates= Arrays.asList(dateArray);
+            int orderTotal= (int) (Math.random()*300);
+            List<String> dates=new ArrayList<>();
+            try {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(simpleDateFormat.parse(date));
+                calendar.add(Calendar.MONTH, -1);
+                for(java.util.Date i=calendar.getTime();!i.after(simpleDateFormat.parse(date));i=new java.util.Date(i.getTime()+5*24*60*60*1000)){
+                    dates.add("'"+simpleDateFormat.format(i)+"'");
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             modelAndView.addObject("orderNum",orderTotal);
 
@@ -146,9 +167,9 @@ public class HotelStatisticController {
         ModelAndView modelAndView=new ModelAndView("admin/hotelstatistic/income_statistic");
         String hid = (String) session.getAttribute("hid");
 
-        modelAndView.addObject("nowDate","2018-6-22");
+        modelAndView.addObject("nowDate","2018-6-28");
 
-        String[] dateArray={"2018-6-22","2018-6-23","2018-6-24","2018-6-25","2018-6-26","2018-6-27","2018-6-28"};
+        String[] dateArray={"'2018-6-22'","'2018-6-23'","'2018-6-24'","'2018-6-25'","'2018-6-26'","'2018-6-27'","'2018-6-28'"};
         List<String> dates= Arrays.asList(dateArray);
         modelAndView.addObject("type","week");
 
@@ -199,8 +220,14 @@ public class HotelStatisticController {
 
         int incomeTotal = 0;
         if(type.equals("week")) {
-            String[] dateArray={"2018-6-22","2018-6-23","2018-6-24","2018-6-25","2018-6-26","2018-6-27","2018-6-28"};
-            List<String> dates= Arrays.asList(dateArray);
+            List<String> dates=new ArrayList<>();
+            try {
+                for(java.util.Date i=new java.util.Date(simpleDateFormat.parse(date).getTime()-6*24*60*60*1000);!i.after(simpleDateFormat.parse(date));i=new java.util.Date(i.getTime()+24*60*60*1000)){
+                    dates.add("'"+simpleDateFormat.format(i)+"'");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             modelAndView.addObject("dates",dates);
 
             List<Integer> incomeWeekLarge = new ArrayList<>();
@@ -228,8 +255,18 @@ public class HotelStatisticController {
             modelAndView.addObject("goals", goals);
         }
         else if(type.equals("month")){
-            String[] dateArray={"2018-5-13","2018-5-20","2018-5-27","2018-6-3","2018-6-10","2018-6-17","2018-6-24"};
-            List<String> dates= Arrays.asList(dateArray);
+            List<String> dates=new ArrayList<>();
+            try {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(simpleDateFormat.parse(date));
+                calendar.add(Calendar.MONTH, -1);
+                for(java.util.Date i=calendar.getTime();!i.after(simpleDateFormat.parse(date));i=new java.util.Date(i.getTime()+5*24*60*60*1000)){
+                    dates.add("'"+simpleDateFormat.format(i)+"'");
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             modelAndView.addObject("dates",dates);
 
             incomeTotal=0;
@@ -282,7 +319,7 @@ public class HotelStatisticController {
     public ModelAndView customerPage(HttpSession session){
         ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/customer_statistic");
         modelAndView.addObject("type","month");
-        modelAndView.addObject("nowDate","2018-6-24");
+        modelAndView.addObject("nowDate","2018-6-28");
         int total=(int)(Math.random()*200);
         int repeat=(int)(Math.random()*total);
         modelAndView.addObject("add",(int)(Math.random()*total));
@@ -290,7 +327,7 @@ public class HotelStatisticController {
         modelAndView.addObject("repeat",repeat);
         modelAndView.addObject("rate",Math.floor(repeat * 10000 / (double) total) / 100.0);
 
-        String[] dateArray={"2018-5-13","2018-5-20","2018-5-27","2018-6-3","2018-6-10","2018-6-17","2018-6-24"};
+        String[] dateArray={"'2018-5-13'","'2018-5-20'","'2018-5-27'","'2018-6-3'","'2018-6-10'","'2018-6-17'","'2018-6-24'"};
         List<String> dates= Arrays.asList(dateArray);
         modelAndView.addObject("dates",dates);
 
@@ -314,20 +351,26 @@ public class HotelStatisticController {
         if(type.equals("month")){
             total=(int)(Math.random()*200);
             repeat=(int)(Math.random()*total);
-            String[] dateArray={"2018-5-13","2018-5-20","2018-5-27","2018-6-3","2018-6-10","2018-6-17","2018-6-24"};
-            dates= Arrays.asList(dateArray);
         }
         else if(type.equals("week")){
             total=(int)(Math.random()*80);
             repeat=(int)(Math.random()*total);
-            String[] dateArray={"2018-6-22","2018-6-23","2018-6-24","2018-6-25","2018-6-26","2018-6-27","2018-6-28"};
-            dates= Arrays.asList(dateArray);
         }
         else if(type.equals("day")){
             total=(int)(Math.random()*10);
             repeat=(int)(Math.random()*total);
-            String[] dateArray={"2018-5-13","2018-5-20","2018-5-27","2018-6-3","2018-6-10","2018-6-17","2018-6-24"};
-            dates= Arrays.asList(dateArray);
+        }
+
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(simpleDateFormat.parse(date));
+            calendar.add(Calendar.MONTH, -1);
+            for(java.util.Date i=calendar.getTime();!i.after(simpleDateFormat.parse(date));i=new java.util.Date(i.getTime()+5*24*60*60*1000)){
+                dates.add("'"+simpleDateFormat.format(i)+"'");
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
         modelAndView.addObject("add",(int)(Math.random()*total));
@@ -353,6 +396,11 @@ public class HotelStatisticController {
 
         modelAndView.addObject("type","week");
         modelAndView.addObject("nowDate","2018-6-24");
+
+        String[] dateArray={"'2018-5-17'","'2018-5-24'","'2018-5-31'","'2018-6-7'","'2018-6-14'","'2018-6-21'","'2018-6-28'"};
+        List<String> dates=Arrays.asList(dateArray);
+        modelAndView.addObject("dates",dates);
+
         int total= (int) (Math.random()*100);
         int occupyNum= (int) (total*Math.random());
         int noOccupyNum=total-occupyNum;
@@ -382,6 +430,21 @@ public class HotelStatisticController {
 
         modelAndView.addObject("type",type);
         modelAndView.addObject("nowDate",date);
+
+        List<String> dates=new ArrayList<>();
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(simpleDateFormat.parse(date));
+            calendar.add(Calendar.MONTH, -1);
+            for(java.util.Date i=calendar.getTime();!i.after(simpleDateFormat.parse(date));i=new java.util.Date(i.getTime()+5*24*60*60*1000)){
+                dates.add("'"+simpleDateFormat.format(i)+"'");
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        modelAndView.addObject("dates",dates);
+
         int total= (int) (Math.random()*100);
         int occupyNum= (int) (total*Math.random());
         int noOccupyNum=total-occupyNum;
@@ -412,6 +475,9 @@ public class HotelStatisticController {
         ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/market_statistic");
         modelAndView.addObject("type","month");
         modelAndView.addObject("nowDate","2018-6-24");
+        String[] dateArray={"'2018-5-13'","'2018-5-20'","'2018-5-27'","'2018-6-3'","'2018-6-10'","'2018-6-17'","'2018-6-24'"};
+        List<String> dates= Arrays.asList(dateArray);
+        modelAndView.addObject("dates",dates);
 
         modelAndView.addObject("averageRate",Math.floor(Math.random() * 10000) / 100.0);
 
@@ -424,7 +490,32 @@ public class HotelStatisticController {
         modelAndView.addObject("type",type);
         modelAndView.addObject("nowDate",date);
 
+        if(type.equals("month")) {
+            List<String> dates = new ArrayList<>();
+            try {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(simpleDateFormat.parse(date));
+                calendar.add(Calendar.MONTH, -1);
+                for (java.util.Date i = calendar.getTime(); !i.after(simpleDateFormat.parse(date)); i = new java.util.Date(i.getTime() + 5 * 24 * 60 * 60 * 1000)) {
+                    dates.add("'" + simpleDateFormat.format(i) + "'");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            modelAndView.addObject("dates", dates);
+        }
+        else if(type.equals("week")){
+            List<String> dates=new ArrayList<>();
+            try {
+                for(java.util.Date i=new java.util.Date(simpleDateFormat.parse(date).getTime()-6*24*60*60*1000);!i.after(simpleDateFormat.parse(date));i=new java.util.Date(i.getTime()+24*60*60*1000)){
+                    dates.add("'"+simpleDateFormat.format(i)+"'");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            modelAndView.addObject("dates",dates);
 
+        }
 
         if(type.equals("day")){
             List<Double> rates=new ArrayList<>();
@@ -433,7 +524,7 @@ public class HotelStatisticController {
                 rates.add(Math.floor(Math.random() * 5000) / 100.0);
                 totalRate=totalRate+rates.get(i);
             }
-            rates.add(totalRate/4);
+            rates.add(Math.floor(totalRate/4*100)/100.0);
             modelAndView.addObject("rates",rates);
 
             modelAndView.addObject("averageRate",totalRate);

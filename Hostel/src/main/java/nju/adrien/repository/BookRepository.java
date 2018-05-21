@@ -21,4 +21,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     @Query("select a from Book a where a.hid=?1 and a.booktime>=?2 and a.booktime<=?3")
     List<Book> findByHotelDate(String hid,Date date1,Date date2);
+
+    @Query("select a from Book a where a.hid=?1 and a.booktime=?2")
+    List<Book> findByHotelDate(String hid,Date date);
 }

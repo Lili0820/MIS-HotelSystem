@@ -91,7 +91,7 @@
                         xAxis: {
                             type: 'category',
                             name: '日期',
-                            data: ['5-13', '5-20', '5-27', '6-3', '6-10', '6-17', '6-24']
+                            data: ${dates}
                         },
                         yAxis: {
                             type: 'value',
