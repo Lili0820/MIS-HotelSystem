@@ -7,7 +7,7 @@
             <li class="nav-item" onclick="window.location.href='/admin/manager/vip'">会员状态</li>
             <li class="nav-item" onclick="window.location.href='/admin/manager/book'">会员订单</li>
             <li class="nav-item" onclick="window.location.href='/admin/manager/statistics'">各店入住</li>
-            <li class="nav-item" onclick="window.location.href='/admin/manager/fiance'">财务统计</li>
+            <li class="nav-item" onclick="window.location.href='/admin/manager/statistics/income'">网站统计</li>
             <li class="nav-item" onclick="window.location.href='/admin/manager/approval'">开店审批</li>
             <li class="nav-item" onclick="window.location.href='/admin/manager/settlement'">线上结算</li>
         </ul>
