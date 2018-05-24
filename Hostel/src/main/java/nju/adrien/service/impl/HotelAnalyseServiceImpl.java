@@ -39,6 +39,7 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
                 bookList = bookRepository.findByHotelDate(hId, date, date);
                 break;
             case "week":
+                //获取一周前的date
                 for (Date i = new Date(date.getTime() - 6 * 60 * 60 * 24*1000); !i.after(date); i = new Date(i.getTime() + 60 * 60 * 24*1000)) {
                     dateList.add(simpleDateFormat.format(i));
                     totalNum=getEveryDayOrderNum(totalNum,hId,i,largeBookNums,doubleBookNums,suiteBookNums);
@@ -52,6 +53,26 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
                     dateList.add(simpleDateFormat.format(i));
                     totalNum=getEveryDayOrderNum(totalNum,hId,i,largeBookNums,doubleBookNums,suiteBookNums);
                 }
+                List<Integer> largeTempList=new ArrayList<>();
+                List<Integer> doubleTempList=new ArrayList<>();
+                List<Integer> suiteTempList=new ArrayList<>();
+                //每隔五天计算一下订单数
+                for(int i=0;i<largeBookNums.size();i=i+5){
+                    int largeTemp=0;
+                    int doubleTemp=0;
+                    int suiteTemp=0;
+                    for(int j=i;j<i+5;j++){
+                        largeTemp=largeTemp+largeBookNums.get(j);
+                        doubleTemp=doubleTemp+doubleBookNums.get(j);
+                        suiteTemp=suiteTemp+suiteBookNums.get(j);
+                    }
+                    largeTempList.add(largeTemp);
+                    doubleTempList.add(doubleTemp);
+                    suiteTempList.add(suiteTemp);
+                }
+                largeBookNums=largeTempList;
+                doubleBookNums=doubleTempList;
+                suiteBookNums=suiteTempList;
                 break;
             default:
                 return null;
@@ -106,8 +127,16 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
 
     @Override
     public IncomeStatisticInfo getIncomeStatisticInfo(String hId,String type, Date date) {
+        int incomeTotal=0;
+
         return null;
     }
+
+    private int getEveryDayIncome(int totalIncome,String hId,Date date,List<Integer> largeIncome,List<Integer> doubleIncome,List<Integer> suiteIncome){
+
+        return 0;
+    }
+
 
     @Override
     public List<Map<String, Double>> getPerRoomIncome() {

@@ -11,6 +11,7 @@ public class VipInfo {
     private String state;
     private String password;
     private String bankid;
+    private String location;
 
     private VipLevel level;
 
@@ -73,6 +74,15 @@ public class VipInfo {
         this.bankid = bankid;
     }
 
+    @Column(name = "location")
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     @OneToOne
     @JoinColumn(name = "vid")
     public VipLevel getLevel() {
@@ -92,6 +102,7 @@ public class VipInfo {
                 ", state='" + state + '\'' +
                 ", password='" + password + '\'' +
                 ", bankid='" + bankid + '\'' +
+                ", location='" + location + '\'' +
                 ", level=" + level +
                 '}';
     }

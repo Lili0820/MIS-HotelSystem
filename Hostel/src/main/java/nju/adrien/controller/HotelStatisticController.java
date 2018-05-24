@@ -1,6 +1,7 @@
 package nju.adrien.controller;
 
 import nju.adrien.service.HotelService;
+import nju.adrien.vo.RFMAnalysisItem;
 import nju.adrien.vo.StatisticVO;
 import nju.adrien.vo.add.GoalInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,11 +194,16 @@ public class HotelStatisticController {
         modelAndView.addObject("incomeTotal",incomeTotal);
 
         List<GoalInfo> goals=new ArrayList<>();
+        int goalTotal=0;
+        int actualTotal=0;
         for(int i=0;i<dates.size();i++){
             int goal= (int) (Math.random()*15000);
             int actual= (int) (Math.random()*15000);
+            goalTotal=goalTotal+goal;
+            actualTotal=actualTotal+actual;
             goals.add(new GoalInfo(dates.get(i),goal,actual,Math.floor(actual*10000/(double)goal)/100.0));
         }
+        goals.add(new GoalInfo("总计",goalTotal,actualTotal,Math.floor(actualTotal*10000/(double)goalTotal)/100.0));
         modelAndView.addObject("goals",goals);
 
         List<Integer> incomeSources=new ArrayList<>();
@@ -337,6 +343,18 @@ public class HotelStatisticController {
             remarks.add(marks[(int) (Math.random()*10)]);
         }
         modelAndView.addObject("remarks",remarks);
+
+        List<RFMAnalysisItem> rfmAnalysisItems=new ArrayList<>();
+        //以系统平均值为标准
+        rfmAnalysisItems.add(new RFMAnalysisItem("<=30",">2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要保持"));
+        rfmAnalysisItems.add(new RFMAnalysisItem("<=30","<=2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要发展"));
+        rfmAnalysisItems.add(new RFMAnalysisItem("<=30","<=2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要价值"));
+        rfmAnalysisItems.add(new RFMAnalysisItem(">30",">2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要挽留"));
+        rfmAnalysisItems.add(new RFMAnalysisItem("<30",">2","<300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般重要"));
+        rfmAnalysisItems.add(new RFMAnalysisItem(">30","<=2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般客户"));
+        rfmAnalysisItems.add(new RFMAnalysisItem(">30",">2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般挽留"));
+        rfmAnalysisItems.add(new RFMAnalysisItem(">30","<=2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"无价值"));
+        modelAndView.addObject("rfm",rfmAnalysisItems);
         return modelAndView;
     }
 
@@ -386,6 +404,18 @@ public class HotelStatisticController {
             remarks.add(marks[(int) (Math.random()*10)]);
         }
         modelAndView.addObject("remarks",remarks);
+
+        List<RFMAnalysisItem> rfmAnalysisItems=new ArrayList<>();
+        //以系统平均值为标准
+        rfmAnalysisItems.add(new RFMAnalysisItem("<=30",">2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要保持"));
+        rfmAnalysisItems.add(new RFMAnalysisItem("<=30","<=2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要发展"));
+        rfmAnalysisItems.add(new RFMAnalysisItem("<=30","<=2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要价值"));
+        rfmAnalysisItems.add(new RFMAnalysisItem(">30",">2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要挽留"));
+        rfmAnalysisItems.add(new RFMAnalysisItem("<30",">2","<300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般重要"));
+        rfmAnalysisItems.add(new RFMAnalysisItem(">30","<=2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般客户"));
+        rfmAnalysisItems.add(new RFMAnalysisItem(">30",">2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般挽留"));
+        rfmAnalysisItems.add(new RFMAnalysisItem(">30","<=2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"无价值"));
+        modelAndView.addObject("rfm",rfmAnalysisItems);
         return modelAndView;
     }
 

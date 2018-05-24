@@ -86,8 +86,8 @@ public class AuthorityController {
     @ResponseBody
     public Map<String, Object> postRegister(@RequestParam String name, @RequestParam String phone, @RequestParam String password,
                                             @RequestParam String passwordAgain, @RequestParam String bankid, @RequestParam String bankPassword,
-                                            HttpSession session) {
-        Map<String, Object> map = vipService.register(name, phone, password, passwordAgain, bankid, bankPassword);
+                                            @RequestParam String location, HttpSession session) {
+        Map<String, Object> map = vipService.register(name, phone, password, passwordAgain, bankid, bankPassword,location);
         if ((boolean) map.get("success")) {
             session.setAttribute("vip_vid", map.get("vip_vid"));
             session.setAttribute("vip_name", map.get("vip_name"));

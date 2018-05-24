@@ -30,7 +30,7 @@ public class AccountServiceImpl implements VipService {
     private FianceService fianceService;
 
     @Override
-    public Map<String, Object> register(String name, String phone, String password, String passwordAgain, String bankid, String bankPassword) {
+    public Map<String, Object> register(String name, String phone, String password, String passwordAgain, String bankid, String bankPassword,String location) {
         Map<String, Object> map = new HashMap<>();
         phone = phone.trim();
         password = password.trim();
@@ -75,6 +75,7 @@ public class AccountServiceImpl implements VipService {
             vip.setPhone(phone);
             vip.setPassword(Utils.md5(password));
             vip.setBankid(bankid);
+            vip.setLocation(location);
             VipLevel level = new VipLevel();
             level.defaultValue();
             level.setVid(vid);

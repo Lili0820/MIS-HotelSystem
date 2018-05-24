@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface VipService {
 
-    Map<String, Object> register(String name, String phone, String password, String passwordAgain, String bankid, String bankPassword);
+    Map<String, Object> register(String name, String phone, String password, String passwordAgain, String bankid, String bankPassword,String location);
 
     Map<String, Object> login(String phone, String password);
 

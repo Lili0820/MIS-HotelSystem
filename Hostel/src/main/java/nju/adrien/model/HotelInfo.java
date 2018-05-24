@@ -19,6 +19,7 @@ public class HotelInfo {
     private String bankid;
     private int level;
     private double point;
+    private String region;
 
     @Id
     @Column(name = "hid")
@@ -92,6 +93,15 @@ public class HotelInfo {
         this.point = point;
     }
 
+    @Column(name = "region")
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
     @Override
     public String toString() {
         return "HotelInfo{" +
@@ -103,6 +113,7 @@ public class HotelInfo {
                 ", bankid='" + bankid + '\'' +
                 ", level=" + level +
                 ", point=" + point +
+                ", region='" + region + '\'' +
                 '}';
     }
 }

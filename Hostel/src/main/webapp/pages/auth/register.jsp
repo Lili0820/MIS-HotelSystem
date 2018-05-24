@@ -29,6 +29,7 @@
                 <form class="register-form">
                     <input class="input-name" type="text" name="name" placeholder="输入姓名"/>
                     <input class="input-phone" type="text" name="phone" placeholder="输入手机号"/>
+                    <input class="input-location" type="text" name="location" placeholder="输入所在地区"/>
                     <input class="input-password" type="password" name="password" placeholder="设置密码"/>
                     <input class="input-password-again" type="password" name="passwordAgain" placeholder="再次设置密码"/>
                     <input class="input-bankid" type="text" name="bankid" placeholder="输入银行卡号"/>
