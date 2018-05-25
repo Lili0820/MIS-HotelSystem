@@ -1,7 +1,7 @@
 package nju.adrien.controller;
 
-import nju.adrien.vo.RFMAnalysisItem;
-import nju.adrien.vo.RegionIncomeRankItem;
+import nju.adrien.vo.add.RFMAnalysisItem;
+import nju.adrien.vo.add.RegionIncomeRankItem;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

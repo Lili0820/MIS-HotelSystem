@@ -1,7 +1,7 @@
 package nju.adrien.controller;
 
 import nju.adrien.service.HotelService;
-import nju.adrien.vo.RFMAnalysisItem;
+import nju.adrien.vo.add.RFMAnalysisItem;
 import nju.adrien.vo.StatisticVO;
 import nju.adrien.vo.add.GoalInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -411,7 +411,7 @@ public class HotelStatisticController {
         rfmAnalysisItems.add(new RFMAnalysisItem("<=30","<=2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要发展"));
         rfmAnalysisItems.add(new RFMAnalysisItem("<=30","<=2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要价值"));
         rfmAnalysisItems.add(new RFMAnalysisItem(">30",">2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"重要挽留"));
-        rfmAnalysisItems.add(new RFMAnalysisItem("<30",">2","<300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般重要"));
+        rfmAnalysisItems.add(new RFMAnalysisItem("<=30",">2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般重要"));
         rfmAnalysisItems.add(new RFMAnalysisItem(">30","<=2",">300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般客户"));
         rfmAnalysisItems.add(new RFMAnalysisItem(">30",">2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"一般挽留"));
         rfmAnalysisItems.add(new RFMAnalysisItem(">30","<=2","<=300",(int)(Math.random()*20000),(int)(Math.random()*50),"无价值"));

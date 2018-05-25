@@ -1,4 +1,4 @@
-package nju.adrien.vo;
+package nju.adrien.vo.add;
 
 /**
  * Created by CLL on 18/5/24.

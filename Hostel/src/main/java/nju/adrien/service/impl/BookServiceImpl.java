@@ -1,5 +1,6 @@
 package nju.adrien.service.impl;
 
+import nju.adrien.enums.BookState;
 import nju.adrien.model.*;
 import nju.adrien.repository.*;
 import nju.adrien.service.BookService;
@@ -173,7 +174,7 @@ public class BookServiceImpl implements BookService {
             //新的订单
             Book model = book.toBook();
             model.setBookid(NumberFormater.formatLongId(NumberFormater.string2Integer(bookRepository.getMaxBookid()) + 1));
-            model.setState("已支付");
+            model.setState(BookState.PAID.toString());
             model.setUpdatetime(new Date(System.currentTimeMillis()));
             model.setBooktime(new Date(System.currentTimeMillis()));
             HotelPlan plan = hotelPlanRepository.findOne(book.getPlanid());
@@ -200,7 +201,7 @@ public class BookServiceImpl implements BookService {
             map.put("success", true);
             //新的订单
             Book model = book.toBook();
-            model.setState("未支付");
+            model.setState(BookState.NO_PAY.toString());
             model.setPay(-1 * model.getPay());
             model.setBookid(NumberFormater.formatLongId(NumberFormater.string2Integer(bookRepository.getMaxBookid()) + 1));
             model.setUpdatetime(new Date(System.currentTimeMillis()));
@@ -230,7 +231,7 @@ public class BookServiceImpl implements BookService {
             vipLevelRepository.saveAndFlush(level);
         }
 
-        book.setState("已取消");
+        book.setState(BookState.CANCEL.toString());
         book.setUpdatetime(new Date(System.currentTimeMillis()));
         bookRepository.saveAndFlush(book);
 
@@ -254,7 +255,7 @@ public class BookServiceImpl implements BookService {
         HotelInfo hotel=hotelInfoRepository.findOne(hotelPlan.getHid());
         hotel.setPoint((remark+hotel.getPoint())/2.0);
         book.setPoint(remark);
-        book.setState("已评价");
+        book.setState(BookState.REMARKED.toString());
         book.setUpdatetime(new Date(System.currentTimeMillis()));
         bookRepository.saveAndFlush(book);
         map.put("success",true);

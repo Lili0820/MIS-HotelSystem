@@ -1,5 +1,6 @@
 package nju.adrien.service.impl;
 
+import nju.adrien.enums.BookState;
 import nju.adrien.model.Book;
 import nju.adrien.model.Cash;
 import nju.adrien.model.HotelPlan;
@@ -34,7 +35,7 @@ public class HallServiceImpl implements HallService {
         //入住状态
         Book book = bookRepository.findOne(bookid);
         book.setCheckin(1);
-        book.setState("已入住");
+        book.setState(BookState.CHECKED.toString());
         book.setUpdatetime(new Date(System.currentTimeMillis()));
         bookRepository.saveAndFlush(book);
         map.put("success", true);
@@ -47,7 +48,7 @@ public class HallServiceImpl implements HallService {
         //入住状态
         Book book = bookRepository.findOne(bookid);
         book.setCheckin(1);
-        book.setState("已入住");
+        book.setState(BookState.CHECKED.toString());
         book.setUpdatetime(new Date(System.currentTimeMillis()));
         book.setPay(-1 * book.getPay());
         bookRepository.saveAndFlush(book);
