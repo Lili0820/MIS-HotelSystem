@@ -1,9 +1,6 @@
 package nju.adrien.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 /**
@@ -24,6 +21,8 @@ public class Book {
     private Date updatetime;
     private String roomtype;
     private String hid;
+
+    private HotelInfo hotelInfo;
 
     @Id
     @Column(name = "bookid")
@@ -122,7 +121,8 @@ public class Book {
     public void setRoomtype(String roomtype) {
         this.roomtype = roomtype;
     }
-    @Column(name = "hid")
+
+    @Column(insertable=false,updatable=false)
     public String getHid() {
         return hid;
     }
@@ -130,6 +130,17 @@ public class Book {
     public void setHid(String hid) {
         this.hid = hid;
     }
+
+    @ManyToOne(fetch=FetchType.LAZY,optional = true)
+    @JoinColumn(name="hid")
+    public HotelInfo getHotelInfo() {
+        return hotelInfo;
+    }
+
+    public void setHotelInfo(HotelInfo hotelInfo) {
+        this.hotelInfo = hotelInfo;
+    }
+
 
     @Override
     public String toString() {
@@ -146,6 +157,7 @@ public class Book {
                 ", updatetime=" + updatetime +
                 ", roomtype='" + roomtype + '\'' +
                 ", hid='" + hid + '\'' +
+                ", hotelInfo=" + hotelInfo +
                 '}';
     }
 }

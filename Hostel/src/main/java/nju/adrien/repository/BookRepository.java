@@ -39,4 +39,10 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     @Query("select a from Book a where a.vid=?1 and a.booktime<?2")
     List<Book> findVIPBooksBeforeDate(String vid,Date date);
+
+    @Query("select a from Book a where a.booktime=?1")
+    List<Book> findBookByDate(Date date);
+
+    @Query("select a from Book a where a.booktime>=?1 and a.booktime<?2")
+    List<Book> findBookByDate(Date date1,Date date2);
 }

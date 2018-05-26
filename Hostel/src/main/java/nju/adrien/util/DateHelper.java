@@ -24,6 +24,10 @@ public class DateHelper {
         return new Date(date.getTime() + MM_PER_DAY);
     }
 
+    public static Date getDateAfterDay(Date date,int day){
+        return new Date(date.getTime()+MM_PER_DAY*day);
+    }
+
     public static int getDayGap(Date date1,Date date2){
         return (int) ((date2.getTime()-date1.getTime())/MM_PER_DAY);
     }

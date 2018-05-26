@@ -1,7 +1,6 @@
 package nju.adrien.repository;
 
 import nju.adrien.model.HotelInfo;
-import nju.adrien.model.VipInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,6 +9,7 @@ import java.util.List;
 /**
  * Created by JiachenWang on 2017/3/9.
  */
+@SuppressWarnings("ALL")
 public interface HotelInfoRepository extends JpaRepository<HotelInfo, String> {
 
     @Query("select a.hid from HotelInfo a where hid=(select max(hid) from HotelInfo)")
@@ -23,4 +23,5 @@ public interface HotelInfoRepository extends JpaRepository<HotelInfo, String> {
 
     @Query("select a.hid from HotelInfo a ")
     List<String> getAllHid();
+
 }

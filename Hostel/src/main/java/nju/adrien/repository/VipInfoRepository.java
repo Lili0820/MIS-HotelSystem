@@ -23,4 +23,7 @@ public interface VipInfoRepository extends JpaRepository<VipInfo, String> {
     @Query("select a from VipInfo a where a.phone like ?1")
     List<VipInfo> findByKey(String phone_key);
 
+    @Query("select a.vid from VipInfo a where a.location=?1")
+    List<String> findVIPByRegion(String region);
+
 }

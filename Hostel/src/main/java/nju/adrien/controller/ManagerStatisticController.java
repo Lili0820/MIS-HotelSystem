@@ -21,7 +21,6 @@ public class ManagerStatisticController {
     @RequestMapping(value = "admin/manager/statistics/income",method = RequestMethod.GET)
     public ModelAndView incomePage(HttpSession session){
         ModelAndView modelAndView=new ModelAndView("/admin/managerstatistic/income_statistic");
-        String hid = (String) session.getAttribute("hid");
 
         modelAndView.addObject("nowDate","2018-6-28");
 
@@ -58,7 +57,6 @@ public class ManagerStatisticController {
     @RequestMapping(value = "admin/manager/statistics/income/find",method = RequestMethod.GET)
     public ModelAndView getIncomeStatistic(HttpSession session,String type,String date){
         ModelAndView modelAndView=new ModelAndView("/admin/managerstatistic/income_statistic");
-        String hid = (String) session.getAttribute("hid");
 
         modelAndView.addObject("nowDate",date);
         modelAndView.addObject("type",type);

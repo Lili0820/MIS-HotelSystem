@@ -5,13 +5,14 @@ package nju.adrien.enums;
  * Created by CLL on 18/5/16.
  */
 public enum Region {
-    GULOU("鼓楼"),
-    JIANYAN("建邺"),
-    XUANWU("玄武"),
-    QINHUAI("秦淮"),
-    QIXIA("栖霞"),
-    PUKOU("浦口"),
-    JIANGNING("江宁");
+    GULOU("鼓楼区"),
+    XUANWU("玄武区"),
+    QINHUAI("秦淮区"),
+    QIXIA("栖霞区"),
+    JIANGNING("江宁区"),
+    PUKOU("浦口区"),
+    JIANYAN("建邺区");
+
 
     private String name;
 

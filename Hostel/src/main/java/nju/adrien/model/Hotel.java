@@ -13,6 +13,8 @@ public class Hotel {
     private String name;
     private String location;
     private String phone;
+    private int level;
+    private String region;
 
     private Set<HotelPlan> hotelPlan;
 
@@ -57,6 +59,26 @@ public class Hotel {
         this.phone = phone;
     }
 
+    @Basic
+    @Column(name = "level")
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    @Basic
+    @Column(name = "region")
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
     @OneToMany(mappedBy = "hid", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<HotelPlan> getHotelPlan() {
         return hotelPlan;
@@ -74,6 +96,8 @@ public class Hotel {
         buffer.append( ", name='" + name + '\'');
         buffer.append(", location='" + location + '\'');
         buffer.append(", phone='" + phone + '\'');
+        buffer.append(", level='" + level + '\'');
+        buffer.append(", region='" + region + '\'');
         buffer.append(", hotelPlan=" + "\n");
         for (HotelPlan plan : hotelPlan){
             buffer.append("\t");

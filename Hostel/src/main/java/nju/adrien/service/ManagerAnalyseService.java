@@ -1,32 +1,31 @@
 package nju.adrien.service;
 
-import java.util.List;
+import nju.adrien.enums.SearchType;
+import nju.adrien.vo.add.HotelStatisticInfo;
+import nju.adrien.vo.add.ManagerIncomeAnalysisInfo;
+import nju.adrien.vo.add.ManagerVIPAnalysisInfo;
+
+import java.sql.Date;
 
 /**
  * Created by CLL on 18/5/16.
  */
 public interface ManagerAnalyseService {
     /**
-     * 不同区域酒店的平均收益变化(同一张图多条折线)
+     * 网站区域收益分析
      * @return
      */
-    public List<List<Double>>  getRegionAverageIncomes();
+    public ManagerIncomeAnalysisInfo getIncomeStatistics(Date date, SearchType type);
 
     /**
-     * 不同星级酒店的平均收益变化
+     * 网站酒店分析
      * @return
      */
-    public List<List<Double>>  getLevelAverageIncomes();
+    public HotelStatisticInfo getHotelStatistics();
 
     /**
-     * 每个区有几个酒店
+     * 网站会员分析
      * @return
      */
-    public List<Integer> getRegionHotelNum();
-
-    /**
-     * 每个区域酒店的平均订单交易成功率
-     * @return
-     */
-    public List<Double> getRegionSuccessBookRates();
+    public ManagerVIPAnalysisInfo getVIPStatistics(String region);
 }
