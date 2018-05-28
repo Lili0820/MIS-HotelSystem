@@ -5,7 +5,6 @@ import nju.adrien.model.HotelPlan;
 import nju.adrien.model.VipLevel;
 import nju.adrien.repository.HotelInfoRepository;
 import nju.adrien.repository.HotelPlanRepository;
-import nju.adrien.repository.HotelRepository;
 import nju.adrien.repository.VipLevelRepository;
 import nju.adrien.service.ProductService;
 import nju.adrien.util.NumberFormater;
@@ -37,12 +36,12 @@ public class ProductServiceImpl implements ProductService {
         if (key == null) {
             infoList = hotelInfoRepository.findAll();
             for (HotelInfo info : infoList) {
-                list.add(new IndexProduct(info.getHid(), info.getName(), info.getLocation(), info.getPhone()));
+                list.add(new IndexProduct(info.getHid(), info.getName(), info.getLocation(), info.getPhone(),info.getLevel()));
             }
         } else {
             infoList = hotelInfoRepository.findByKey("%" + key + "%");
             for (HotelInfo info : infoList) {
-                list.add(new IndexProduct(info.getHid(), info.getName(), info.getLocation(), info.getPhone()));
+                list.add(new IndexProduct(info.getHid(), info.getName(), info.getLocation(), info.getPhone(),info.getLevel()));
             }
         }
         return list;
@@ -51,13 +50,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public IndexProduct getProduct(String hid) {
         HotelInfo info = hotelInfoRepository.findOne(hid);
-        return new IndexProduct(info.getHid(), info.getName(), info.getLocation(), info.getPhone());
+        return new IndexProduct(info.getHid(), info.getName(), info.getLocation(), info.getPhone(),info.getLevel());
     }
 
     @Override
     public IndexProduct getProductInfo(String hid) {
         HotelInfo info = hotelInfoRepository.findOne(hid);
-        return new IndexProduct(info.getHid(), info.getName(), info.getLocation(), info.getPhone());
+        return new IndexProduct(info.getHid(), info.getName(), info.getLocation(), info.getPhone(),info.getLevel());
     }
 
     @Override

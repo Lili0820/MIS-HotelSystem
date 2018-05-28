@@ -25,6 +25,7 @@
             <div style="width: 300px">
                 <div class="normal-div">我的会员卡号： <span class="number">${info.vid}</span></div>
                 <div class="normal-div">我的手机号： <span class="number">${info.phone}</span></div>
+                <div class="normal-div">所在区域： <span class="number">${info.location}</span></div>
 
                 <label for="js-name-input" class="normal-input-label">姓名</label>
                 <input type="text" id="js-name-input" class="normal-input" value="${info.name}">

@@ -58,8 +58,15 @@ public class BookController {
     // 取消订单操作
     @RequestMapping(value = "/user/order/cancel", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> book(String planid) {
-        return bookService.cancelBook(planid);
+    public Map<String, Object> book(String bookid) {
+        return bookService.cancelBook(bookid);
+    }
+
+    // 评价订单操作
+    @RequestMapping(value = "/user/order/remark", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> remarkBook(String bookid,int point) {
+        return bookService.remarkBook(bookid,point);
     }
 
 }

@@ -19,8 +19,9 @@
             <img src="${info.imgPath}" class="product-img"/>
             <br> </br>
             <input id="js-id-input" hidden value="${info.hid}">
-            <label class="normal-input-label">酒店编号：${info.hid}</label>
-            <br> </br>
+            <label class="normal-input-label">酒店编号：${info.hid}</label></br>
+            <label class="normal-input-label">酒店等级：${info.level}星级</label>
+            <br>
             <label for="js-name-input" class="normal-input-label">酒店名称</label>
             <input type="text" class="normal-input" id="js-name-input" value="${info.name}"/>
             <label for="js-addr-input" class="normal-input-label">酒店地址</label>

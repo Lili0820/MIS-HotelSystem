@@ -6,17 +6,19 @@ public class IndexProduct {
     private String name;
     private String location;
     private String phone;
+    private int level;
     private String imgPath;
 
     public IndexProduct() {
         this.imgPath = "/assets/img/product.jpg";
     }
 
-    public IndexProduct(String hid, String name, String location, String phone) {
+    public IndexProduct(String hid, String name, String location, String phone,int level) {
         this.hid = hid;
         this.name = name;
         this.location = location;
         this.phone = phone;
+        this.level=level;
         this.imgPath = "/assets/img/product.jpg";
     }
 
@@ -58,6 +60,14 @@ public class IndexProduct {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     @Override

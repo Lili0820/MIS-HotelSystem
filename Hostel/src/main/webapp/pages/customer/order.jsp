@@ -34,10 +34,10 @@
                                 <th width="15%">入住日期</th>
                                 <th width="15%">人员</th>
                                 <th width="10%">房间</th>
-                                <th width="15%">金额</th>
+                                <th width="10%">金额</th>
                                 <th width="10%">入住</th>
                                 <th width="10%">支付</th>
-                                <th width="10%">操作</th>
+                                <th width="15%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -74,7 +74,11 @@
                                             <c:when test="${item.checkin == 0}">
                                                 <button class="button" onclick="cancel(this)">取消</button>
                                             </c:when>
-                                            <c:when test="${item.checkin > 0}">无</c:when>
+                                            <c:when test="${item.state=='已入住'}">
+                                                <input class="point" type="number" name="points" value="5" min="1" max="5"/>
+                                                <button class="button" onclick="remark(this)">评价</button>
+                                            </c:when>
+                                            <c:when test="${item.state=='已评价'||item.state=='已取消'}">无</c:when>
                                         </c:choose>
                                     </td>
                                 </tr>
@@ -109,7 +113,7 @@
                 type: "POST",
                 url: "/user/order/cancel",
                 data: {
-                    planid: $(obj).parents("tr").children("td").eq(0).text()
+                    bookid: $(obj).parents("tr").children("td").eq(0).text(),
                 },
                 success: function (data) {
                     if (data["success"] == false) {
@@ -126,6 +130,33 @@
                 }
             });
         }
+    }
+
+    function remark(obj) {
+
+        $.ajax({
+            type: "POST",
+            url: "/user/order/remark",
+            data: {
+                bookid: $(obj).parents("tr").children("td").eq(0).text(),
+                point:$(obj).prev().val()
+
+            },
+            success: function (data) {
+                if (data["success"] == false) {
+                    toaster(data["error"], "error");
+                } else {
+                    toaster("评价成功~", "success");
+                    setTimeout(function () {
+                        window.location.href = "/user/order";
+                    }, 1000);
+                }
+            },
+            error: function () {
+                toaster("服务器出现问题，请稍微再试！", "error");
+            }
+        });
+
     }
 
 </script>
