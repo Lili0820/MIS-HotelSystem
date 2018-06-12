@@ -207,7 +207,7 @@
                                 <tbody>
                                 <c:forEach items="${orders}" var="item">
                                     <tr>
-                                        <td>${item.bookid}</td>
+                                        <td>${item.bookid.substring(11)}</td>
                                         <td>${item.date}</td>
                                         <td>${item.type}</td>
                                         <td>￥ ${item.price}</td>

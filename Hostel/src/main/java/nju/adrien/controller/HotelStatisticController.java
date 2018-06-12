@@ -63,6 +63,7 @@ public class HotelStatisticController {
     @RequestMapping(value = "/admin/statistics/order/find",method = RequestMethod.GET)
     public ModelAndView getOrderStatistics(HttpSession session,String type,String date){
         System.out.println(type+" "+date);
+        String hid = (String) session.getAttribute("hid");
 
         ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/order_statistic");
         modelAndView.addObject("type",type);
@@ -145,16 +146,14 @@ public class HotelStatisticController {
             modelAndView.addObject("cancelRoom",cancelRoom);
         }
         else if(type.equals("day")){
-            //TODO
-            List<BookVO> bookList=new ArrayList<>();
             try {
-                bookList.add(new BookVO("1",new Date(simpleDateFormat.parse(date).getTime()),"大床房",588,"未入住"));
-                bookList.add(new BookVO("3",new Date(simpleDateFormat.parse(date).getTime()),"标准间",388,"已入住"));
+                List<BookVO> bookList=hotelService.getHotelBooks(hid,new Date(simpleDateFormat.parse(date).getTime()));
+//                bookList.add(new BookVO("1",new Date(simpleDateFormat.parse(date).getTime()),"大床房",588,"未入住"));
+//                bookList.add(new BookVO("3",new Date(simpleDateFormat.parse(date).getTime()),"标准间",388,"已入住"));
+                modelAndView.addObject("orders",bookList);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            modelAndView.addObject("orders",bookList);
-
 
             List<Integer> cancelTime=new ArrayList<>();
             cancelTime.add((int) (Math.random() * 5));
@@ -311,10 +310,19 @@ public class HotelStatisticController {
 
         }
         else if(type.equals("day")){
-            incomeTotal= (int) (Math.random()*3000);
+            try {
+                incomeTotal=0;
+                List<BookVO> bookList=hotelService.getHotelBooks(hid,new Date(simpleDateFormat.parse(date).getTime()));
+//                bookList.add(new BookVO("1",new Date(simpleDateFormat.parse(date).getTime()),"大床房",588,"未入住"));
+//                bookList.add(new BookVO("3",new Date(simpleDateFormat.parse(date).getTime()),"标准间",388,"已入住"));
+                modelAndView.addObject("orders",bookList);
+                for (BookVO bookVO:bookList){
+                    incomeTotal=incomeTotal+(int)bookVO.getPrice();
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             modelAndView.addObject("incomeTotal", incomeTotal);
-            //TODO
-            modelAndView.addObject("orders",new ArrayList<>());
             List<GoalInfo> goals = new ArrayList<>();
             int goalIncome=(int) (Math.random()*3000);
             goals.add(new GoalInfo(date,goalIncome,incomeTotal,Math.floor(incomeTotal * 10000 / (double) goalIncome) / 100.0));
@@ -501,13 +509,18 @@ public class HotelStatisticController {
 
         if(type.equals("day")) {
             List<StatisticVO> list = null;
+            double average=1;
             try {
-                list = hotelService.getRoomStatistic(hid, new Date(simpleDateFormat.parse("2018-05-20").getTime()));
-                System.out.println(hid+" "+list.size());
+                list = hotelService.getRoomStatistic(hid, new Date(simpleDateFormat.parse(date).getTime()));
+                for (StatisticVO statisticVO:list){
+                    average=(average+(statisticVO.getBookCheckin())/(double)(statisticVO.getAvailable()+statisticVO.getBookTotal()))/2.0;
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
             modelAndView.addObject("list", list);
+            modelAndView.addObject("average",Math.floor(10000*average) / 100.0);
         }
         return modelAndView;
     }

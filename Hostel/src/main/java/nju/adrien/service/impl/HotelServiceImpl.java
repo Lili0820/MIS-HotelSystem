@@ -8,6 +8,7 @@ import nju.adrien.service.HotelService;
 import nju.adrien.util.NumberFormater;
 import nju.adrien.util.Utils;
 import nju.adrien.vo.BillVO;
+import nju.adrien.vo.BookVO;
 import nju.adrien.vo.FinanceVO;
 import nju.adrien.vo.StatisticVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -331,6 +332,19 @@ public class HotelServiceImpl implements HotelService {
         }
 
         return list;
+    }
+
+    @Override
+    public List<BookVO> getHotelBooks(String hid, Date date) {
+        List<HotelPlan> hotelPlans=hotelPlanRepository.findByHidDate(hid, date);
+        List<BookVO> result=new ArrayList<>();
+        for (HotelPlan hotelPlan:hotelPlans){
+            List<Book> books=bookRepository.findByPlanid(hotelPlan.getPlanid());
+            for (Book book:books) {
+                result.add(new BookVO(book.getBookid(), date, book.getRoomtype(), Math.abs(book.getPay()), book.getState()));
+            }
+        }
+        return result;
     }
 
 }
