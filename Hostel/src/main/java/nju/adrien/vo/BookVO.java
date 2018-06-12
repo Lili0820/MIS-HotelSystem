@@ -21,6 +21,17 @@ public class BookVO {
     private Date updatetime;//最后操作时间
     private int point;
 
+    public BookVO() {
+    }
+
+    public BookVO(String bookid, Date date, String type, double price, String state) {
+        this.bookid = bookid;
+        this.date = date;
+        this.type = type;
+        this.price = price;
+        this.state = state;
+    }
+
     public String getBookid() {
         return bookid;
     }

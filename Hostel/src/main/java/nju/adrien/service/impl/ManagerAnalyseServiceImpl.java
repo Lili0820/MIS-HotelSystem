@@ -25,13 +25,16 @@ import java.util.List;
  * Created by CLL on 18/5/16.
  */
 public class ManagerAnalyseServiceImpl implements ManagerAnalyseService {
-    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
     @Autowired
     BookRepository bookRepository;
     @Autowired
     HotelRepository hotelRepository;
     @Autowired
     VipInfoRepository vipInfoRepository;
+
+    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+
+    private static String[] REGIONS={"鼓楼区", "玄武区", "秦淮区", "栖霞区", "江宁区", "浦口区", "建邺区"};
     @Override
     public ManagerIncomeAnalysisInfo getIncomeStatistics(Date date, SearchType type) {
         List<String> dateList=new ArrayList<>();
@@ -73,8 +76,8 @@ public class ManagerAnalyseServiceImpl implements ManagerAnalyseService {
 
     private List<RegionIncomeRankItem> getIncomeRank(Date beginDate,Date date){
         List<Book> bookList= bookRepository.findBookByDate(beginDate,date);
-        String[] regions={"鼓楼区", "玄武区", "秦淮区", "栖霞区", "江宁区", "浦口区", "建邺区"};
-        int[] income=new int[regions.length];
+
+        int[] income=new int[REGIONS.length];
         for (Book book:bookList){
             switch (Region.valueOf(book.getHotelInfo().getLocation())){
                 case GULOU:
@@ -101,22 +104,21 @@ public class ManagerAnalyseServiceImpl implements ManagerAnalyseService {
             }
         }
         List<RegionIncomeRankItem> result=new ArrayList<>();
-        for (int i=0;i<regions.length;i++) {
-            result.add(new RegionIncomeRankItem(income[i],Math.floor(Math.random()*10000)/100.0, regions[i]));
+        for (int i=0;i<REGIONS.length;i++) {
+            result.add(new RegionIncomeRankItem(income[i],Math.floor(Math.random()*10000)/100.0, REGIONS[i]));
         }
         return result;
     }
 
     @Override
     public HotelStatisticInfo getHotelStatistics() {
-        String[] regions={"鼓楼区", "玄武区", "秦淮区", "栖霞区", "江宁区", "浦口区", "建邺区"};
         int[] prices={0,200,300,500,1000,6000};
         List<Integer> hotelNums=new ArrayList<>();
         List<Hotel> hotelList;
         List<List<Integer>> levelList=new ArrayList<>();
         List<List<Integer>> priceList=new ArrayList<>();
-        for(int i=0;i<regions.length;i++){
-            hotelList=hotelRepository.getHotelByRegion(regions[i]);
+        for(int i=0;i<REGIONS.length;i++){
+            hotelList=hotelRepository.getHotelByRegion(REGIONS[i]);
             hotelNums.add(hotelList.size());
             Integer[] levelNum=new Integer[3];
             Integer[] priceNum=new Integer[prices.length];
@@ -141,18 +143,17 @@ public class ManagerAnalyseServiceImpl implements ManagerAnalyseService {
             }
 
         }
-        return new HotelStatisticInfo(Arrays.asList(regions),hotelNums,levelList,priceList);
+        return new HotelStatisticInfo(Arrays.asList(REGIONS),hotelNums,levelList,priceList);
     }
 
     @Override
     public ManagerVIPAnalysisInfo getVIPStatistics(String region) {
-        String[] regions={"鼓楼区", "玄武区", "秦淮区", "栖霞区", "江宁区", "浦口区", "建邺区"};
         List<Integer> customerNums=new ArrayList<>();
-        for (int i=0;i<regions.length;i++){
+        for (int i=0;i<REGIONS.length;i++){
             customerNums.add(vipInfoRepository.findVIPByRegion(region).size());
         }
         ManagerVIPAnalysisInfo managerVIPAnalysisInfo=new ManagerVIPAnalysisInfo();
-        managerVIPAnalysisInfo.setRegions(Arrays.asList(regions));
+        managerVIPAnalysisInfo.setRegions(Arrays.asList(REGIONS));
         managerVIPAnalysisInfo.setCustomerNums(customerNums);
         return managerVIPAnalysisInfo;
     }

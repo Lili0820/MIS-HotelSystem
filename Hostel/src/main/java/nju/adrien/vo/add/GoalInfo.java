@@ -4,10 +4,10 @@ package nju.adrien.vo.add;
  * Created by CLL on 18/5/19.
  */
 public class GoalInfo {
-    String date;
-    int goalIncome;
-    int actualIncome;
-    double rate;
+    private String date;
+    private int goalIncome;
+    private int actualIncome;
+    private double rate;
 
     public GoalInfo(String date, int goalIncome, int actualIncome, double rate) {
         this.date = date;

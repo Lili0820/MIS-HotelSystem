@@ -1,9 +1,10 @@
 package nju.adrien.controller;
 
 import nju.adrien.service.HotelService;
-import nju.adrien.vo.add.RFMAnalysisItem;
+import nju.adrien.vo.BookVO;
 import nju.adrien.vo.StatisticVO;
 import nju.adrien.vo.add.GoalInfo;
+import nju.adrien.vo.add.RFMAnalysisItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +34,9 @@ public class HotelStatisticController {
     public ModelAndView orderPage(HttpSession session){
         ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/order_statistic");
         String hid = (String) session.getAttribute("hid");
-        modelAndView.addObject("nowDate","2018-6-28");
+        modelAndView.addObject("nowDate","2018-6-21");
         int orderTotal=334;
-        String[] dateArray={"'2018-6-22'","'2018-6-23'","'2018-6-24'","'2018-6-25'","'2018-6-26'","'2018-6-27'","'2018-6-28'"};
+        String[] dateArray={"'2018-5-10'","'2018-5-17'","'2018-5-24'","'2018-5-31'","'2018-6-7'","'2018-6-14'","'2018-6-21'"};;
         List<String> dates= Arrays.asList(dateArray);
 
         modelAndView.addObject("type","month");
@@ -145,7 +146,15 @@ public class HotelStatisticController {
         }
         else if(type.equals("day")){
             //TODO
-            modelAndView.addObject("orderList",null);
+            List<BookVO> bookList=new ArrayList<>();
+            try {
+                bookList.add(new BookVO("1",new Date(simpleDateFormat.parse(date).getTime()),"大床房",588,"未入住"));
+                bookList.add(new BookVO("3",new Date(simpleDateFormat.parse(date).getTime()),"标准间",388,"已入住"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            modelAndView.addObject("orders",bookList);
+
 
             List<Integer> cancelTime=new ArrayList<>();
             cancelTime.add((int) (Math.random() * 5));
@@ -168,9 +177,9 @@ public class HotelStatisticController {
         ModelAndView modelAndView=new ModelAndView("admin/hotelstatistic/income_statistic");
         String hid = (String) session.getAttribute("hid");
 
-        modelAndView.addObject("nowDate","2018-6-28");
+        modelAndView.addObject("nowDate","2018-6-21");
 
-        String[] dateArray={"'2018-6-22'","'2018-6-23'","'2018-6-24'","'2018-6-25'","'2018-6-26'","'2018-6-27'","'2018-6-28'"};
+        String[] dateArray={"'2018-5-10'","'2018-5-17'","'2018-5-24'","'2018-5-31'","'2018-6-7'","'2018-6-14'","'2018-6-21'"};
         List<String> dates= Arrays.asList(dateArray);
         modelAndView.addObject("type","week");
 
@@ -325,7 +334,7 @@ public class HotelStatisticController {
     public ModelAndView customerPage(HttpSession session){
         ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/customer_statistic");
         modelAndView.addObject("type","month");
-        modelAndView.addObject("nowDate","2018-6-28");
+        modelAndView.addObject("nowDate","2018-6-21");
         int total=(int)(Math.random()*200);
         int repeat=(int)(Math.random()*total);
         modelAndView.addObject("add",(int)(Math.random()*total));
@@ -333,7 +342,7 @@ public class HotelStatisticController {
         modelAndView.addObject("repeat",repeat);
         modelAndView.addObject("rate",Math.floor(repeat * 10000 / (double) total) / 100.0);
 
-        String[] dateArray={"'2018-5-13'","'2018-5-20'","'2018-5-27'","'2018-6-3'","'2018-6-10'","'2018-6-17'","'2018-6-24'"};
+        String[] dateArray={"'2018-5-10'","'2018-5-17'","'2018-5-24'","'2018-5-31'","'2018-6-7'","'2018-6-14'","'2018-6-21'"};
         List<String> dates= Arrays.asList(dateArray);
         modelAndView.addObject("dates",dates);
 
@@ -425,9 +434,9 @@ public class HotelStatisticController {
         String hid = (String) session.getAttribute("hid");
 
         modelAndView.addObject("type","week");
-        modelAndView.addObject("nowDate","2018-6-24");
+        modelAndView.addObject("nowDate","2018-6-21");
 
-        String[] dateArray={"'2018-5-17'","'2018-5-24'","'2018-5-31'","'2018-6-7'","'2018-6-14'","'2018-6-21'","'2018-6-28'"};
+        String[] dateArray={"'2018-5-10'","'2018-5-17'","'2018-5-24'","'2018-5-31'","'2018-6-7'","'2018-6-14'","'2018-6-21'"};
         List<String> dates=Arrays.asList(dateArray);
         modelAndView.addObject("dates",dates);
 
@@ -448,8 +457,6 @@ public class HotelStatisticController {
         noOccupys.add(noOccupyNum-noOccupys.get(0)-noOccupys.get(1));
         modelAndView.addObject("noOccupys",noOccupys);
 
-        List<StatisticVO> list = hotelService.getRoomStatistic(hid, new Date(System.currentTimeMillis()));
-        modelAndView.addObject("list", list);
         return modelAndView;
     }
 
@@ -493,7 +500,13 @@ public class HotelStatisticController {
         modelAndView.addObject("noOccupys",noOccupys);
 
         if(type.equals("day")) {
-            List<StatisticVO> list = hotelService.getRoomStatistic(hid, new Date(System.currentTimeMillis()));
+            List<StatisticVO> list = null;
+            try {
+                list = hotelService.getRoomStatistic(hid, new Date(simpleDateFormat.parse("2018-05-20").getTime()));
+                System.out.println(hid+" "+list.size());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             modelAndView.addObject("list", list);
         }
         return modelAndView;
@@ -504,8 +517,8 @@ public class HotelStatisticController {
     public ModelAndView marketPage(HttpSession session){
         ModelAndView modelAndView = new ModelAndView("admin/hotelstatistic/market_statistic");
         modelAndView.addObject("type","month");
-        modelAndView.addObject("nowDate","2018-6-24");
-        String[] dateArray={"'2018-5-13'","'2018-5-20'","'2018-5-27'","'2018-6-3'","'2018-6-10'","'2018-6-17'","'2018-6-24'"};
+        modelAndView.addObject("nowDate","2018-6-21");
+        String[] dateArray={"'2018-5-10'","'2018-5-17'","'2018-5-24'","'2018-5-31'","'2018-6-7'","'2018-6-14'","'2018-6-21'"};
         List<String> dates= Arrays.asList(dateArray);
         modelAndView.addObject("dates",dates);
 

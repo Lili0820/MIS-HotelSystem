@@ -4,9 +4,9 @@ package nju.adrien.vo.add;
  * Created by CLL on 18/5/25.
  */
 public class RFMAnalysisAverage {
-    int averagePrice;//平均价格
-    int averageOrderNum;//平均订单数
-    int averageDay;//平均几天前
+    private int averagePrice;//平均价格
+    private int averageOrderNum;//平均订单数
+    private int averageDay;//平均几天前
 
     public RFMAnalysisAverage(int averagePrice, int averageOrderNum, int averageDay) {
         this.averagePrice = averagePrice;

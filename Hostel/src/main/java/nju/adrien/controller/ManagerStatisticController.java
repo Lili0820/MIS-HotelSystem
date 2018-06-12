@@ -22,9 +22,9 @@ public class ManagerStatisticController {
     public ModelAndView incomePage(HttpSession session){
         ModelAndView modelAndView=new ModelAndView("/admin/managerstatistic/income_statistic");
 
-        modelAndView.addObject("nowDate","2018-6-28");
+        modelAndView.addObject("nowDate","2018-6-21");
 
-        String[] dateArray={"'2018-6-22'","'2018-6-23'","'2018-6-24'","'2018-6-25'","'2018-6-26'","'2018-6-27'","'2018-6-28'"};
+        String[] dateArray={"'2018-5-10'","'2018-5-17'","'2018-5-24'","'2018-5-31'","'2018-6-7'","'2018-6-14'","'2018-6-21'"};;
         List<String> dates= Arrays.asList(dateArray);
         modelAndView.addObject("type","week");
 

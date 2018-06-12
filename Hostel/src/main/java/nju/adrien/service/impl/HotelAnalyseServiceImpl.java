@@ -95,9 +95,7 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
         bookNums.add(largeBookNums);
         bookNums.add(doubleBookNums);
         bookNums.add(suiteBookNums);
-        OrderStatisticInfo orderStatisticInfo=new OrderStatisticInfo(totalNum,bookNums,dateList,bookList);
-
-        return orderStatisticInfo;
+        return new OrderStatisticInfo(totalNum,bookNums,dateList,bookList);
     }
 
     private int getEveryDayOrderNum(int totalNum,String hId,Date date,List<Integer> largeBookNums,List<Integer> doubleBookNums,List<Integer> suiteBookNums){
@@ -169,8 +167,7 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
         incomes.add(doubleIncome);
         incomes.add(suiteIncome);
 
-        IncomeStatisticInfo incomeStatisticInfo=new IncomeStatisticInfo(dateList,incomeTotal,incomes);
-        return incomeStatisticInfo;
+        return new IncomeStatisticInfo(dateList,incomeTotal,incomes);
     }
 
     private int getEveryDayIncome(int totalIncome,String hId,Date date,List<Integer> largeIncomeList,List<Integer> doubleIncomeList,List<Integer> suiteIncomeList){
@@ -226,10 +223,10 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
     }
 
     private List<RFMAnalysisItem> getRFMAnalysis(String hId,RFMAnalysisAverage rfmAnalysisAverage){
-        String[] strategys={"重要保持","重要发展","重要价值","重要挽留","一般重要"};
-        String[] compare1={"<=","<=","<=",">","<=",">",">",">"};
-        String[] compare2={">","<=","<=",">",">","<=",">","<="};
-        String[] compare3={">","<=",">",">","<=",">","<=","<="};
+        final String[] STRATETY={"重要保持","重要发展","重要价值","重要挽留","一般重要"};
+        final String[] compare1={"<=","<=","<=",">","<=",">",">",">"};
+        final String[] compare2={">","<=","<=",">",">","<=",">","<="};
+        final String[] compare3={">","<=",">",">","<=",">","<=","<="};
         int[] vipNum=new int[8];
         int[] vipMoney=new int[8];
         List<String> vipIds=bookRepository.findBookVIPByHotel(hId);
@@ -290,10 +287,10 @@ public class HotelAnalyseServiceImpl implements HotelAnalyseService {
             }
         }
         List<RFMAnalysisItem> rfmAnalysisItemList=new ArrayList<>();
-        for(int i=0;i<strategys.length;i++){
+        for(int i=0;i<STRATETY.length;i++){
             rfmAnalysisItemList.add(new RFMAnalysisItem(compare1[i]+rfmAnalysisAverage.getAverageDay(),
                     compare2[i]+rfmAnalysisAverage.getAverageOrderNum(),compare3[i]+rfmAnalysisAverage.getAveragePrice(),
-                    vipNum[i],vipMoney[i],strategys[i]));
+                    vipNum[i],vipMoney[i],STRATETY[i]));
         }
         return rfmAnalysisItemList;
     }

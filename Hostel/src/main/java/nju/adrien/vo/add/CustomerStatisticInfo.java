@@ -6,11 +6,11 @@ import java.util.List;
  * Created by CLL on 18/5/19.
  */
 public class CustomerStatisticInfo {
-    int totalNum;
-    int addNum;
-    int repeatNum;
-    List<RFMAnalysisItem> rfmAnalysisItems;
-    RFMAnalysisAverage rfmAnalysisAverage;
+    private int totalNum;
+    private int addNum;
+    private int repeatNum;
+    private List<RFMAnalysisItem> rfmAnalysisItems;
+    private RFMAnalysisAverage rfmAnalysisAverage;
 
     public CustomerStatisticInfo(int totalNum, int addNum, int repeatNum) {
         this.totalNum = totalNum;
